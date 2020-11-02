@@ -19,18 +19,12 @@ install:
 
 # 下拉代码后执行的操作
 script:
-  - hexo clean  #清除
-  - hexo g && gulp  #生成
+  - hexo clean # 清除
+  - hexo g # 生成
 
 after_script:
-  # GH_REF是最下面配置的仓库地址
-  - git clone https://${GH_REF} .deploy_git
-  - cd .deploy_git
-  - git checkout master
-  - cd ../
-  # 这一步之前的操作是为了保留master分支的提交记录，不然每次git init的话只有1条commit
-  - mv .deploy_git/.git/ ./public/
   - cd ./public
+  - git init
   # 修改github的用户名
   - git config user.name "soldiergit"
   # 修改email
@@ -51,8 +45,6 @@ env:
   global:
     # 设置GH_REF，注意更改yourname及末尾加上.git
     - GH_REF: github.com/soldiergit/soldiergit.github.io.git
-    # 加密后的github token（命令：travis encrypt -r soldiergit/soldiergit.github.io GH_Token=xxxxxx）
-    - secure: `eF5BarpKYOE0Y2OKcFbXLZGxD6xEVDP3RIIHDtzq07+LArju2sLoANhvJFzCev98+6828E3IAeqbrEh/kg2+7tsjCbmX0NU8lvvvyBaQ3YVk1fmVHc7vyjpB20j3FDMt11NTt43xnnSKMbmvwEOG2blis+Fvb186DRsNC6AefzVP+nul9jbVLDqp40FvXFbgEquZHGivjoVkL0ouLo2WTvtyrl/Nc63XD/AeRhqMBTiL5pg91HYZXei6tAt60ZyySSl0+qv6utipM+s68gcAprkGnwUGcrJc5PdEkys/jwjt7YDHlUy7WRcoOnXmAEzYf5o0Sxn8ztnYciYxinbCF8xJbGwpuYMWkdhREBmZKELIvND6M1rjEPttKa81UxQYwxg9g6BabEBOgx0Ozyun+XHfjMG4fAxNbgA2trUrV/Ri48VkqueJQz8EjSJtU0Yr3CL+GCV7LLsGUoR85kFEGQa6+cXH/GrCRLO42mZcMbsNSqBmZokiT9kNvYCsyPohomBDY5DYeR5JaT+c25J0GCXxMzCgPzOariqk6MPbGBlGHaghvHpG+psnD0fkeQCcF9iPxcHV5ruCAAE6DY4mRgkIYaZ41OyGTcAj1SMniGYG1SWNN3FNzwhU33Yu17iMG8XVlw0m9iMDDPcFnaHxdd5elff/TVoltPRlBcfXmYI=`
 
 # 配置通知（电子邮件、IRC、campfire等）
 # https://docs.travis-ci.com/user/notifications/
