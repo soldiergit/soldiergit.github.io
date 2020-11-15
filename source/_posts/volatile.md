@@ -5,13 +5,13 @@ index_img: /resource/img/thread_visit_memory.png
 date: 2020-11-03 10:44:24
 ---
 
-## volatile是java虚拟机提供的轻量级的同步机制
+## 1.volatile是java虚拟机提供的轻量级的同步机制
 
-### 1.保证可见性
+### 1.1 保证可见性
 
-### 1.1 <font color=#FF000>不保证原子性</font>
+### 1.2 <font color=#FF000>不保证原子性</font>
 
-### 1.2 禁止命令重排
+### 1.3 禁止命令重排
 &nbsp;&nbsp;首先要知道，JVM是java虚拟机、JMM是java内存模型
 &nbsp;&nbsp;JMM（java内存模型Java Memory Model，简称JMM）本身是一个抽象的概念<font color=#FF000>并不真是存在</font>，它描述的是一组规则或规范，通过这组规范定义了程序中各个变量（包括实例字段，静态字段和构成数组对象的元素）的访问方式。
 
