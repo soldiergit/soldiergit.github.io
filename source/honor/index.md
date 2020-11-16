@@ -2885,7 +2885,7 @@ body {
   display: none;
 }
 .cid-r3mcMCaeWf {
-  background-image: url("/resource/img/mbr-1920x1280.jpg");
+  background-image: url("/resource/img/honor-bg.jpg");
 }
 .cid-r3mcMCaeWf .mbr-text,
 .cid-r3mcMCaeWf .mbr-section-btn {
