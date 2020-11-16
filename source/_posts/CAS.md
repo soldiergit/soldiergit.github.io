@@ -29,7 +29,7 @@ false	 current data:2019
 ```
 
 ## 2.CAS底层原理？如果知道，谈谈你对UnSafe的理解
-自旋锁、UnSafe类
+直接回答：自旋锁、UnSafe类
 
 ### 2.1 atomicInteger.getAndIncrement();方法底层源码
 在之前讲volatile时，我们使用 **atomicInteger.getAndIncrement();** 解决了 **number++;** 在多线程环境下的线程安全问题，它的底层源码实现为：
@@ -116,5 +116,5 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 **3、引出来ABA问题**
 
 ## 4.自旋锁
-自旋 = UnSafe类 + CAS
+自旋 = UnSafe类 + CAS思想
 
