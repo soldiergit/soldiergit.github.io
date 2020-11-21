@@ -35,3 +35,35 @@ Set<String> set = new CopyOnWriteArraySet<>();
 ```
 <font color=#FF000>**注意**</font>：CopyOnWriteArraySet的底层是通过CopyOnWriteArrayList实现的。
 
+## 4.set遍历的几种方式？
+1. for循环
+```java
+for (String str : set) {
+      System.out.println(str);
+}
+```
+2. iterator迭代器
+```java
+Iterator<String> it = set.iterator();
+while (it.hasNext()) {
+  String str = it.next();
+  System.out.println(str);
+}
+```
+3. set.forEach（java8）
+```java
+set.forEach(item -> {
+    System.out.println(item);
+});
+```
+4. set.stream().forEach（java8）
+```java
+set.stream().forEach(item -> {
+    System.out.println(item);
+});
+```
+
+**总结：**
+ - iterator 迭代器方式比 foreach 的效率高；
+ - forEach 最耗时；
+ - stream forEach 比较耗时和 for 循环差不多。

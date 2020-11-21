@@ -64,3 +64,43 @@ public boolean add(E e) {
     }
 }
 ```
+
+## 6.list遍历的几种方式？
+1. 普通fori 方式
+2. for 循环
+```java
+for (int i = 0; i < list.size(); i++) {
+    System.out.println(list.get(i));
+}
+```
+3. iterator迭代器
+```java
+Iterator<String> it = list.iterator();
+while (it.hasNext()) {
+  String str = it.next();
+  System.out.println(str);
+}
+```
+4. list.forEach（java8）
+```java
+list.forEach(item -> {
+    System.out.println(item);
+});
+```
+5. list.stream().forEach（java8）
+```java
+list.stream().forEach(item -> {
+    System.out.println(item);
+});
+```
+6. parallelStream().forEach（java8）
+```java
+list.parallelStream().forEach(item -> {
+    System.out.println(item);
+});
+```
+
+**总结：**
+ - 推荐使用 fori，或iterator迭代器；
+ - forEach 最耗时；
+ - stream forEach 比较耗时和 for 差不多。

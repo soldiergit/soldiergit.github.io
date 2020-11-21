@@ -53,3 +53,41 @@ Map<String, String> map = new ConcurrentHashMap<>();
 <font color=#FF000>**重点**</font>：ConcurrentHashMap使用分段锁Segment，将数据分成一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问。
 在计算map的size是是遍历所有Segment的size进行累加，先连续两次尝试不加锁的size是否一致，超过3次会给每个Segment加锁。（Segment分段锁继承自ReentrantLock重入锁）
 ***JDK1.8抛弃Segment分段锁***，利用CAS+Synchronized，数据结构采用：数组+链表+红黑树
+
+## 5.map遍历的几种方式？
+1. keySet的for循环
+```java
+for(String key : map.keySet()){  
+    System.out.println(key + "--" + map.get(key));  
+}
+```
+2. keySet的iterator迭代器
+```java
+Iterator it=map.keySet().iterator();  
+while(it.hasNext()){  
+    String key = it.next().toString();   
+    String value = map.get(key);  
+    System.out.println(key + "--" + value);  
+}
+```
+3. entrySet的for循环
+```java
+for(Map.Entry<String, String> entry : map.entrySet()){  
+    System.out.println(entry.getKey() + "--" + entry.getValue());  
+}
+```
+4. entrySet的iterator迭代器
+```java
+Set set = map.entrySet();       
+Iterator i = set.iterator();       
+while(i.hasNext()){    
+    Map.Entry<String, String> entry = (Map.Entry<String, String>) i.next();  
+    System.out.println(entry.getKey() + "==" + entry.getValue());  
+}
+```
+5. java8还新增了forEach方式以及.stream().forEach
+
+**总结：**
+ - entrySet的方式整体都是比keySet方式要高一些；
+ - 单纯的获取key来说，两者的差别并不大，但是如果要获取value，还是entrySet的效率会更好，因为keySet需要从map中再次根据key获取value，而entrySet一次都全部获取出来；
+ - iterator 迭代器方式比 foreach 的效率高。

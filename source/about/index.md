@@ -8,7 +8,7 @@ layout: about
 
 <!--<details>-->
   <!--<summary><span>查看简历</span></summary>-->
-  <a href="/resource/pdf/黄结-Java-2021应届生.pdf" target="_blank">点击查看简历</a>
+  <a href="/resource/pdf/SoldierResume.pdf" target="_blank">点击查看简历</a>
   <!--</br>感谢您花时间阅读我的简历，期待能有机会和你共事。-->
 <!--</details>-->
 
