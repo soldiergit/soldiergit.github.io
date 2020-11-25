@@ -1,6 +1,6 @@
 ---
-title: Java面试题——CAS你知道吗？
-tags: [Java面试题, CAS, UnSafe]
+title: 面试题—CAS你知道吗？
+tags: [面试题, Java面试题, CAS, UnSafe]
 index_img: /resource/img/CAS.png
 date: 2020-11-10 10:49:02
 ---
@@ -48,7 +48,7 @@ public final int getAndIncrement() {
 ### 2.2 UnSafe
 ![](/resource/img/UnSafe.png)
 1. ***<font color=#FF000>UnSafe</font>*** 是CAS的核心类，由于Java无法直接访问底层系统，需要通过本地（native）方法来访问，UnSafe相当于是一个后门，基于该类可以直接操作特定内存的数据。<font color=#FF000>UnSafe类存在于sun.misc包中</font>（存在于rt.jar，JDK从娘胎里就携带的最基础类），其内部方法操作可以想C的指针一样直接操作内存，因为Java中CAS操作执行依赖于UnSafe类的方法。
- ***<font color=#FF000><u>注意UnSafe类中所有方法都是native修饰的，也就是说UnSafe类中的方法都直接调用操作系统底层资源执行相应任务</u></font>***
+ <font color=#FF000><u>*注意UnSafe类中所有方法都是native修饰的，也就是说UnSafe类中的方法都直接调用操作系统底层资源执行相应任务*</u></font>
 2. 变量**valueOffset** ，表示该变量值子啊内存中的<font color=#FF000>偏移地址</font>，因为UnSafe就是根据内存偏移地址获取数据的。
 ![](/resource/img/valueOffset.png)
 3. 变量value用volatile修饰，保证了多线程中间的内存可见性。

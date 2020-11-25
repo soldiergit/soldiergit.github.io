@@ -1,6 +1,6 @@
 ---
-title: 算法基础——排序
-tags: [算法, 排序]
+title: 排序算法学习笔记
+tags: [基础知识, 算法, 排序]
 index_img: /resource/img/Sort.png
 date: 2020-11-24 11:20:00
 ---

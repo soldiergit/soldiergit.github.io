@@ -1,6 +1,6 @@
 ---
-title: Java面试题——请谈谈你对volatile的理解
-tags: [Java面试题, JMM, volatile]
+title: 面试题—请谈谈你对volatile的理解
+tags: [面试题, Java面试题, JMM, volatile]
 index_img: /resource/img/thread_visit_memory.png
 date: 2020-11-03 10:44:24
 ---
@@ -136,7 +136,7 @@ public class VolatileDemo {
 &nbsp;&nbsp;计算机在执行程序时，为了提高性能，编译器和处理器常常会对<font color=#FF000>指令做重排</font>，一般分为一下3种：
 ![](/resource/img/JMM_rearrangement.png)
 &nbsp;&nbsp;**1、** 单线程环境里面确保程序最终执行结果和代码顺序执行的结果一致。即<font color=#FF000>单线程环境下不用担心指令重排</font>。
-&nbsp;&nbsp;**2、** 处理器在进行重排序时必须要考虑指令之间的**<font color=#FF000>数据依赖性</font>**
+&nbsp;&nbsp;**2、** 处理器在进行重排序时必须要考虑指令之间的<font color=#FF000>**数据依赖性**</font>
 &nbsp;&nbsp;**3、** 多线程环境中线程交替执行，由于编译器优化重排的存在，两个线程中使用的变量能否保证一致性是无法确定的，结果无法预测
 比如说：现有 int a,b = 0;
 按顺序，线程t1执行 a = b，线程2执行 b = 2;

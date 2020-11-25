@@ -1,6 +1,6 @@
 ---
-title: 数据库基础——MySQL
-tags: [数据库基础, MySQL, Java面试题]
+title: MySQL学习笔记及面试题
+tags: [基础知识, 数据库基础, MySQL, Java面试题, 框架]
 index_img: /resource/img/MySQL.jpeg
 date: 2020-11-20 08:58:26
 ---
@@ -220,7 +220,7 @@ MySQL 提供了两种相似的日期时间类型：`DATETIME` 和 `TIMESTAMP`。
 
 ## 五、切分
 ### 水平切分
-<font color=#FF000>水平切分</font>又称为**`Sharding`**，它是将同一个表中的记录拆分到多个结构相同的表中。
+<font color=#FF000>水平切分</font>又称为`Sharding`，它是将同一个表中的记录拆分到多个结构相同的表中。
 
 当一个表的数据不断增多时，Sharding 是必然的选择，它可以将数据分布到集群的不同节点上，从而缓存单个数据库的压力。
 ![](/resource/img/MySQLSharding.jpg)

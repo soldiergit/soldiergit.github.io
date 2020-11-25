@@ -1,6 +1,6 @@
 ---
-title: 计算机基础——HTTP
-tags: [计算机基础, HTTP]
+title: HTTP学习笔记
+tags: [基础知识, 计算机基础, HTTP]
 index_img: /resource/img/HTTP.jpg
 date: 2020-11-17 09:28:56
 ---

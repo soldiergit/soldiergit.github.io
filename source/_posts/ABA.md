@@ -1,6 +1,6 @@
 ---
-title: Java面试题——原子类AtomicInteger的ABA问题谈谈？原子更新引用知道吗？
-tags: [Java面试题, ABA, 乐观锁]
+title: 面试题—原子类AtomicInteger的ABA问题谈谈？原子更新引用知道吗？
+tags: [面试题, Java面试题, ABA, 乐观锁]
 index_img: /resource/img/ABA.jpeg
 date: 2020-11-15 11:09:54
 ---
@@ -52,7 +52,7 @@ public class AtomicReferenceDemo {
 ```
 
 ## 3.时间戳的原子引用
-ABA问题的解决办法：***AtomicStampedReference类***
+ABA问题的解决办法：**AtomicStampedReference类**
 ```java
 public class ABADemo {
 
