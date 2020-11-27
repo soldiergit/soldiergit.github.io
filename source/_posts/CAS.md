@@ -5,9 +5,8 @@ index_img: /resource/img/CAS.png
 date: 2020-11-10 10:49:02
 ---
 
-## 1.CAS代码演示
-CAS就是单词compareAndSet的首字母缩写，意思是： ***<font color=#FF000>比较并交换</font>***
-CASDemo代码演示：
+## CAS 代码演示
+CAS： ***<font color=#FF000>比较并交换</font>***，需要用到 JUC 的 Atomic 包下面的类来进行操作。
 ```java
 public static void main(String[] args) {
     AtomicInteger atomicInteger = new AtomicInteger(5);
@@ -28,10 +27,10 @@ true	 current data:2019
 false	 current data:2019
 ```
 
-## 2.CAS底层原理？如果知道，谈谈你对UnSafe的理解
-直接回答：自旋锁、UnSafe类
+## CAS 底层原理？谈谈你对 UnSafe 的理解
+自旋锁、UnSafe类
 
-### 2.1 atomicInteger.getAndIncrement();方法底层源码
+### 以atomicInteger.getAndIncrement() 为例
 在之前讲volatile时，我们使用 **atomicInteger.getAndIncrement();** 解决了 **number++;** 在多线程环境下的线程安全问题，它的底层源码实现为：
 ```java
 /**
@@ -45,15 +44,15 @@ public final int getAndIncrement() {
 ```
 该方法中， **this** 指的是当前对象， **valueOffset** 指的是当前对象的内存偏移量（就是内存地址）
 
-### 2.2 UnSafe
+### UnSafe
 ![](/resource/img/UnSafe.png)
 1. ***<font color=#FF000>UnSafe</font>*** 是CAS的核心类，由于Java无法直接访问底层系统，需要通过本地（native）方法来访问，UnSafe相当于是一个后门，基于该类可以直接操作特定内存的数据。<font color=#FF000>UnSafe类存在于sun.misc包中</font>（存在于rt.jar，JDK从娘胎里就携带的最基础类），其内部方法操作可以想C的指针一样直接操作内存，因为Java中CAS操作执行依赖于UnSafe类的方法。
- <font color=#FF000><u>*注意UnSafe类中所有方法都是native修饰的，也就是说UnSafe类中的方法都直接调用操作系统底层资源执行相应任务*</u></font>
+ <font color=#FF000><u>*注意 UnSafe 类中所有方法都是native修饰的，也就是说UnSafe类中的方法都直接调用操作系统底层资源执行相应任务*</u></font>
 2. 变量**valueOffset** ，表示该变量值子啊内存中的<font color=#FF000>偏移地址</font>，因为UnSafe就是根据内存偏移地址获取数据的。
 ![](/resource/img/valueOffset.png)
-3. 变量value用volatile修饰，保证了多线程中间的内存可见性。
+3. 变量 value 用 volatile 修饰，保证了多线程中间的内存可见性。
 
-### 2.3 CAS是什么？
+## CAS是什么？
 **CAS**的全称为**Compare-And-Swap**，<font color=#FF000>它是一条**CPU**并发原语</font>。
 它的功能是判断内存某个位置的值是否为预期值，如果是则更改为新的值，这个过程是原子的。（一致性）
 
@@ -66,7 +65,7 @@ public final int getAndIncrement() {
 不相等的话 do while 继续，直到相等为止
 ```
 
-#### 2.3.1 unsafe.getAndAddInt();
+### unsafe.getAndAddInt();
 var1 AtomicInteger对象本身。
 var2 该对象值的引用地址。
 var4 需要变动的数量。
@@ -82,7 +81,7 @@ var5 需要通过var1 var2 找出的主内存中真实存在的值，
 4. 这是线程A恢复，执行compareAndSwapInt方法比较，发现自己手里的值数字5和主内存的值数字6不一致，说明该值已经被其它线程抢先一步修改过了，那A线程本次修改失败，<font color=#FF000>只能重新读取重新来一遍了</font>；
 5. 线程A重新获取value值，因为变量value被volatile修饰，所以其它线程对它的修改，线程A总是能够看到，线程A继续执行compareAndSwapInt方法进行比较替换，直到成功。
 
-#### 2.3.2 底层汇编
+### 底层汇编
 UnSafe类中的compareAndSwapInt，是一个本地方法，该方法的实现位于unsafe.cpp中
 ```cpp
 UNSAFE_ENTRY(jboolean, Unsafe_CompareAndSwapInt(JNIEnv *env, jobject unsafe, jobject obj, jlong offset, jint e, jint x))
@@ -98,8 +97,8 @@ UNSAFE_END
 通过Atomic::cmpxchg实现比较替换，其中参数x是即将更新的值，参数e是原内存的值。
 </font>
 
-## 3.CAS的缺点
-**1、循环时间长开销很大**
+## CAS的缺点
+**1. 循环时间长开销很大**
 我们可以看到getAndAddInt方法执行时，有个do while
 ```java
 public final int getAndAddInt(Object var1, long var2, int var4) {
@@ -107,14 +106,59 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
     do {
         var5 = this.getIntVolatile(var1, var2);
     } while(!this.compareAndSwapInt(var1, var2, var5, var5 + var4));
-
     return var5;
 }
 ```
 如果CAS失败，会一直进行尝试。如果CAS长时间一直不成功，可能会给CPU带来很大的开销。
-**2、只能保证一个共享变量的原子操作**
-**3、引出来ABA问题**
+**2. 只能保证一个共享变量的原子操作**
+**3. 引出来ABA问题**
 
-## 4.自旋锁
-自旋 = UnSafe类 + CAS思想
+## CAS 手写实现
+CAS 是采用 JNI(Java Native Interface) 的底层方法实现的，调用 c语言 来执行 cpu 的指令,而 cpu 则执行指令"cmpchg"执行来进行比较替换的操作，这是一个原子性的操作。
+```java
+public class CompareAndSwap {
+    /**
+     * cas 原则: 原值 = 预期值 的情况下更新  新值
+     *
+     * 原值: count当前的值
+     * 预期值: count最新的值
+     * 新值: 需要更新的值
+     */
+
+    // 使用volatile保证可见性，实时获取count的值
+    volatile static int count = 0;
+
+    // 实现方法
+    public static void request(){
+        int oldValue = getCount();
+        if (!compareAndSwap(oldValue,oldValue + 1)){
+
+        }
+    }
+
+    // 比较原值和预期值
+    public synchronized static boolean compareAndSwap(int oldValue,int newValue){
+        if (getCount() == oldValue) {
+            count = newValue;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    // 获取count值
+    public static int getCount(){
+        return count;
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 1000; i++) {
+            Thread thread = new Thread(CompareAndSwap::request);
+            thread.start();
+        }
+        System.out.println(count);
+    }
+}
+```
 
