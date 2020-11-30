@@ -1,5 +1,5 @@
 ---
-title: 面试题—ArrayList是线程不安全，请编码写一个不安全的案例并给出解决方案。
+title: ArrayList是线程不安全，请编码写一个不安全的案例并给出解决方案。
 tags: [面试题, Java面试题, ArrayList, 集合类不安全问题]
 index_img: /resource/img/ArrayList.jpeg
 date: 2020-11-16 10:03:51

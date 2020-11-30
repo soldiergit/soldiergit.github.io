@@ -1,5 +1,5 @@
 ---
-title: 面试题—Spring框架面试总结
+title: Spring框架面试总结
 tags: [面试题, Java面试题, Spring， 框架]
 index_img: /resource/img/Spring.png
 date: 2020-11-18 15:49:57
@@ -45,7 +45,7 @@ date: 2020-11-18 15:49:57
 
 > IoC让相互协作的组件保持松散的耦合，而AOP编程允许你把遍布于应用各层的功能分离出来形成可重用的功能组件。
 
-## BeanFactory和ApplicationContext有什么区别？
+## BeanFactory和ApplicationContext的区别？
 BeanFactory和ApplicationContext是Spring的两大核心接口，都可以当做Spring的容器。其中ApplicationContext是BeanFactory的子接口。
 1. **BeanFactory**：是Spring里面最底层的接口，包含了各种Bean的定义，读取Bean配置文档，管理Bean的加载、实例化，控制Bean的生命周期，维护Bean之间的依赖关系。**ApplicationContext**作为BeanFactory的派生，除了提供BeanFactory所具有的功能外，还提供了更完整的架构功能：
 &nbsp;&nbsp;&nbsp;&nbsp;① 继承MessageSource，因此支持国际化；
@@ -91,7 +91,7 @@ Spring上下文中的Bean生命周期也类似：
 <font color=#0000FF>**（8）destroy-method：**</font>
 最后，如果这个Bean的Spring配置中配置了destroy-method属性，就会自动调用其配置的销毁方法。
 
-## 解释一下Spring支持的几种Bean的作用域
+## Spring Bean Scope(作用域)
 Spring容器中的Bean可以分为5个范围：
 1. **singleton**：<font color=#FF000>默认</font>，每个容器中只有一个Bean的实例，单例模式由BeanFactory自身维护；
 2. **prototype**：为每一个Bean请求提供一个实例；
@@ -107,7 +107,7 @@ Spring框架并没有对单例Bean进行任何多线程的封装处理。关于�
 ThreadLocal和线程同步机制都是为了解决多线程中相同变量访问冲突问题。同步机制采用了“时间换空间”的方式，仅提供一份变量，不同线程在访问前需要获取锁，没获得锁的线程则需要排队。而ThreadLocal采用了“时间换空间”的方式。
 ThreadLocal会为每一个线程提供一个独立的变量副本，从而隔离了多个线程对数据的访问冲突。因为每一个线程都拥有自己的变量副本（JMM内存模型），从而也就没有必要对该变量进行同步了。ThreadLocal提供了线程安全的共享对象，在编写多线程代码时，可以把不安全的变量封装进ThreadLocal。
 
-## Spring基于xml注入Bean的几种方式
+## Spring注入Bean的几种方式
 1. set方法注入；
 2. 构造器注入：①通过index设置参数位置；②通过type设置参数类型；
 3. 静态工厂注入；
@@ -173,7 +173,7 @@ public OneService getService(int status) {
  - **@Component**：通用的注解，可标注任意类为 Spring 组件。
  - **@Repository**：对应DAO层，主要同于数据库相关操作；
  - **@Service**：对应服务层，主要涉及一些复杂的逻辑，需要用到DAO层；
- - **@Controller**：对应Spring MVC控制层，主要用户接受用户请求并调用 Service 层返回数据给前端页面
+ - **@Controller**：对应Spring MVC控制层，主要用户接受用户请求并调用 Service 层返回数据给前端页面。
 
 ## Spring管理事务的方式有几种？
 1. **编程式事务**，在代码中硬编程，`不推荐`；
@@ -207,3 +207,92 @@ public OneService getService(int status) {
 5. ViewResolver 会根据逻辑 View 查找实际的View；
 6. DispatcherServlet 把返回的Model 传给 View 进行视图渲染；
 7. 最后把View 返回给客户端。
+
+## SpringMVC的常用注解
+### 1.组件型
+作用于类上，将其声明为Spring的Bean，然后统一管理。
+ - @Component：通用的注解，可标注任意类为 Spring 组件。
+ - @Repository：对应DAO层，主要同于数据库相关操作；
+ - @Service：对应服务层，主要涉及一些复杂的逻辑，需要用到DAO层；
+ - @Controller：对应Spring MVC控制层，主要用户接受用户请求并调用 Service 层返回数据给前端页面。
+
+### 2.请求和参数型
+1. `@RequestMapping`：用于处理请求地址映射，可以作用于类和方法上
+    1.1 value：定义request请求的映射地址
+    1.1 method：定义地request址请求的方式，包括【GET, POST, HEAD, OPTIONS, PUT, PATCH, DELETE, TRACE.】默认接受get请求，如果请求方式和定义的方式不一样则请求无法成功。
+    1.1 params：定义request请求中必须包含的参数值。
+    1.1 headers：定义request请求中必须包含某些指定的请求头，如：RequestMapping(value = "/something", headers = "content-type=text/*")说明请求中必须要包含"text/html", "text/plain"这中类型的Content-type头，才是一个匹配的请求。
+    1.1 consumes：定义请求提交内容的类型。
+    1.1 produces：指定返回的内容类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回
+```java
+@RequestMapping(value="/requestTest.do",params = {"name=sdf"},headers = {"Accept-Encoding=gzip, deflate, br"},method = RequestMethod.GET)
+public String getIndex(){
+    System.out.println("请求成功");
+    return "index";
+}
+```
+2. `@RequestParam`：用于获取传入参数的值
+    2.1 value：参数的名称
+    2.1 required：定义该传入参数是否必须，默认为true，（和@RequestMapping的params属性有点类似）
+```java
+@RequestMapping("/requestParams1.do")
+public String requestParams1(@RequestParam(required = false) String name){
+    System.out.println("name = "+name);
+    return "index";
+}
+```
+3. `@PathVariable`：用于定义路径参数值
+    3.1 value：参数的名称
+    3.1 required：定义传入参数是否为必须值
+```java
+@RequestMapping("/{myname}/pathVariable2.do")
+public String pathVariable2(@PathVariable(value = "myname") String name){
+    System.out.println("myname = "+name);
+    return "index";
+}
+```
+4. `@ResponseBody`：作用于方法上，可以将整个返回结果以某种格式返回，如json或xml格式
+```java
+@RequestMapping("/{myname}/pathVariable2.do")
+@ResponseBody
+public String pathVariable2(@PathVariable(value = "myname") String name){
+    System.out.println("myname = "+name);
+    return "index";
+}
+```
+5. `@ModelAttribute`：用于把参数保存到model中，可以注解方法或参数，注解在方法上的时候，该方法将在处理器方法执行之前执行，然后把返回的对象存放在 session（前提时要有@SessionAttributes注解） 或模型属性中，@ModelAttribute(“attributeName”) 在标记方法的时候指定，若未指定，则使用返回类型的类名称（首字母小写）作为属性名称。　
+```java
+@ModelAttribute("user")
+public UserEntity getUser(){
+    UserEntity userEntityr = new UserEntity();
+    userEntityr.setUsername("asdf");
+    return userEntityr;
+}
+
+@RequestMapping("/modelTest.do")
+public String getUsers(@ModelAttribute("user") UserEntity user){
+    System.out.println(user.getUsername());
+    return "/index";
+}
+```
+6. `@SessionAttributes`：默认情况下Spring MVC将模型中的数据存储到request域中。当一个请求结束后，数据就失效了。如果要跨页面使用。那么需要使用到session。而@SessionAttributes注解就可以使得模型中的数据存储一份到session域中。配合@ModelAttribute("user")使用的时候,会将对应的名称的model值存到session中
+```java
+@Controller
+@RequestMapping("/test")
+@SessionAttributes(value = {"user","test1"})
+public class LoginController{
+    @ModelAttribute("user")
+    public UserEntity getUser(){
+        UserEntity userEntityr = new UserEntity();
+        userEntityr.setUsername("asdf");
+        return userEntityr;
+    }
+
+    @RequestMapping("/modelTest.do")
+    public String getUsers(@ModelAttribute("user") UserEntity user ,HttpSession session){
+        System.out.println(user.getUsername());
+        System.out.println(session.getAttribute("user"));
+        return "/index";
+    }
+}
+```

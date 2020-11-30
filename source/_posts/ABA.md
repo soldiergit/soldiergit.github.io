@@ -1,5 +1,5 @@
 ---
-title: 面试题—原子类AtomicInteger的ABA问题谈谈？原子更新引用知道吗？
+title: 原子类AtomicInteger的ABA问题谈谈？原子更新引用知道吗？
 tags: [面试题, Java面试题, ABA, 乐观锁]
 index_img: /resource/img/ABA.jpeg
 date: 2020-11-15 11:09:54
