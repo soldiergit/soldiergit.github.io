@@ -286,8 +286,8 @@ MySQL 查询的大致语法结构如下：
 2. **on**
 3. **join**
 4. **where**
-5. **group by**：对结果集进行分组，如统计每个人有多少条记录
-6. **having**：having 字句用于筛选查询结果，如查询总成绩>1000的学生，我们不能用where来筛选超过1000的学生，因为表中不存在这样一条记录
+5. **group by**：对结果集进行分组，如统计用户可以访问多少个菜单(`select role_id, count(menu_id) from sys_role_menu group by role_id;`)
+6. **having**：having 子句用于筛选查询结果，如查询总成绩>1000的学生，我们不能用where来筛选超过1000的学生，因为表中不存在这样一条记录`having sun(nums) > 1000`
 7. **select**
 8. **distinct**：去重
 9. **order by**：对结果集进行排序
@@ -307,10 +307,25 @@ MySQL 查询的大致语法结构如下：
 4. 经常和主字段一块查询但主字段索引值比较多的表字段。
 
 ## 谈谈 MVCC？
-首先我们要了解LBCC（Lock-Based Concurrency Control）——基于锁的并发控制，而MVCC (Multi-Version Concurrency Control) 是在 LBCC 上的改进，主要是在读操作上提高了并发量。
+首先我们要了解LBCC（Lock-Based Concurrency Control）——基于锁的并发控制，而MVCC (Multi-Version Concurrency Control)并发版本控制 是在 LBCC 上的改进，主要是在读操作上提高了并发量。
 
 InnoDB存储引擎，实现的是MVCC
 **MVCC最大的好处**：读不加锁，读写不冲突。在读多写少的OLTP应用中，读写不冲突是非常重要的，极大的增加了系统的并发性能，现阶段几乎所有的RDBMS，都支持了MVCC。
+
+## 快照读、当前读和 MVCC
+### 1.快照读
+**快照读**是基于 MVCC 和 undo log 来实现的，适用于简单 select 语句。
+ - **读已提交**：一个事务内操作一条数据，可以查询到另一个已提交事务操作同一条数据的最新值。（`Oracle 默认隔离级别`）所以当一个事务内有多个 sql 查询时，会生成多个 readView，每条 sql 都能查询到最新 readView 的值；
+ - **可重复读**：每个事务只关注自己事务开始查询到的数据值，无论事务查询同一条数据多少次，该数据改了多少次，都只能查询到事务开始之前的数据值。（`MySQL 默认隔离级别`）所以当一个事务内有多个 sql 查询时，读取到的 readView 都是同一个，那么查询某条数据的值也是一样的。
+
+而所谓 **MVCC 并发版本控制**，是靠 readView（事务视图）来实现的，readView 是针对同一条数据生成的视图。多个 readView 组成 undo log（回滚日志）。
+
+### 2.当前读
+**当前读**是基于 *临键锁（行锁 + 间歇锁）* 来实现的，适用于insert、update、delete、select ... for update、select ... lock in share mode语句，以及加锁了的 select 语句。
+
+更新数据时，都是先读后写，而这个读，就是当前读；读取数据时，读取该条数据的已经提交的最新事务生成的 readView。假设现在事务A有2个 sql 语句，事务开始时生成 readView(id = n)：
+ - 如果第一个 sql 操作一条数据时读当前的 readView(id = n)，此时开始一个事务B生成 readView(id = n+1)，并且对该条数据做了操作(非简单select操作)，此时事务A的第二个 sql 语句**当前读**该数据，就会读取到最新的 readView(id = n+1)；
+ - 假设事务A的第二个 sql 语句操作数据时，事务B还未提交其非简单的 select 操作，那么这条数据就会被事务B**写锁**锁住，所以事务A就会阻塞，等待事务B释放锁。
 
 ## char、varchar、text的区别
 1. char 长度固定，每条数据占用等长字节空间；适合用在身份证号码、手机号码等；
