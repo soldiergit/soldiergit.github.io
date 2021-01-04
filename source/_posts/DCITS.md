@@ -1025,7 +1025,7 @@ in router out
 适配流程：适配流程也叫数据适配，在ESB上是指对交易报文数据进行处理的流程；
 渠道适配流程：ESB上在渠道上配置的适配流程叫做“渠道适配流程”；
 服务适配流程：ESB上在服务上配置的适配流程叫做“服务适配流程”；
-服务识别规则、系统识别规则，动态、静态识别
+服务识别规则、系统识别规则，动态、静态识别。
 
 五个服务：服务识别、系统识别、拆包、组包、服务路由；
 
@@ -1058,10 +1058,253 @@ chanel_core_service_Pay.xml（响应拆包）
 service_Pay_system_core.xml（请求组包）
 service_Pay_system_atm.xml（响应组包）
 
-### 公司概述及架构发展
+### 产品安装
+先启动MOM队列，因为需要完成console和ESB之间的通信，上面有两个队列分别监听console和ESB；在启动console之前需要先安装数据库，而console需要与数据库交互；最后启动ESB
 
+#### Linux下启动
+1. 查看文件信息
+```shell
+ls -lrt
+```
+2. 赋予执行权限
+```shell
+chmod 775 *bin
+```
+3. 查看剩余空间
+```shell
+free -g
+```
 
-### 产品解决方案介绍
+##### 安装消息中间件MOM
+1. 安装消息中间件
+```shell
+./ SmartMOM.bin -i console
+```
+2. 启动消息中间件
+```shell
+./StartMessageServer.sh
+```
+3. 后台启动消息中间件
+```shell
+nohup ./StartMessageServer.sh & tail -f nohup.out
+nohup ./StartMessageServer.sh > mom.log & tail -f mom.out
+```
+4. 关闭消息中间件，需要携带端口和ip
+```shell
+./StopMessageServer.sh 127.0.0.1 7799
+```
+5. 查看java进程
+```shell
+ps -ef|grep java
+ps -ef|grep Main
+```
+6. 配置日志级别
+```text
+1. 第一行等号后面第一个值是服务的日志级别error
+2. 第二个值是console的话，会在控制台输出日志
+```
 
+##### 安装企业服务总线ESB
+1. 安装ESB
+```shell
+./ SmartESB.bin -i console
+安装过程需要确认jdk、安装路径、jdbcURL
+```
+2. 创建数据库用户
+3. 在安装目录下找到数据库文件并执行
 
-### 行业典型案例介绍
+4. 启动服务
+```text
+1. 启动console：
+./startConsole.sh
+    报错，需要上传一个license文件到bin目录下，然后后台启动
+nohup ./startConsole.sh > console.out & tail -f console.out
+
+2. 启动esb(包括in、router、out)
+nohup ./startSmart.sh > all.log & tail -f all.log
+```
+3. 后台启动消息中间件
+```shell
+nohup ./StartMessageServer.sh & tail -f nohup.out
+nohup ./StartMessageServer.sh > mom.log & tail -f mom.out
+```
+4. 关闭消息中间件，需要携带端口和ip
+```shell
+./StopMessageServer.sh 127.0.0.1 7799
+```
+
+#### Windows下启动
+1. 修改MOM安装目录下启动、关闭bat文件的jdk路径；
+2. 修改SEB安装目录下：
+    2.1 bind/setESBEnv.cmd的jdk路径；
+    2.2 configs/console_conf/conf/dbconfig.xml和proxool.xml的数据库用户名
+    2.3 middleware/tomcat/webapps/esbconsole/WEB-INF/classes/config-oracle.properties的数据库用户名
+    2.4 DB_scripts/esbconsole.bat的数据库用户名
+3. 运行Oracle安装目录下的BIN/sqlplus.exe 不要关闭，打开就可以了
+4. 启动StartMessageServer.bat、DB_scripts/esbconsole.bat、console、smart
+
+natstat -an | findstr 4545
+
+### 1.课堂作业
+1. 配置接入协议
+```text
+httpPosIn6001
+http://127.0.0.1:6001/esb/pos
+```
+![](/resource/img/esb/1.png)
+下方接入协议
+![](/resource/img/esb/2.png)
+
+2. 配置接出协议
+    1. 先设置http服务提供方响应报文，然后复制自动出现的地址
+    ```text
+    http://127.0.0.1:80081/rsbconsole/httpServer
+    ```
+    ![](/resource/img/esb/3.png)
+    2. 然后设置接出协议
+    ![](/resource/img/esb/4.png)
+    3. 下发接出协议
+    ![](/resource/img/esb/5.png)
+3. 配置渠道：pos
+![](/resource/img/esb/6.png)
+4. 配置服务：posSvc
+![](/resource/img/esb/7.png)
+5. 配置识别规则
+![](/resource/img/esb/8.png)
+6. 测试
+![](/resource/img/esb/9.png)
+
+### 2.配置动态识别规则（渠道绑定服务）
+1. 适配管理→识别规则管理
+![](/resource/img/esb/10.png)
+2. 测试
+![](/resource/img/esb/11.png)
+
+### 3.新增系统识别（服务绑定系统）
+1. 新增out识别规则
+![](/resource/img/esb/12.png)
+2. 修改系统识别
+![](/resource/img/esb/13.png)
+3. 测试
+    1. 测试001
+![](/resource/img/esb/14.png)
+    2. 测试002
+![](/resource/img/esb/15.png)
+
+### 4.新增系统
+1. 添加core银行管理系统
+![](/resource/img/esb/16.png)
+2. 系统名
+![](/resource/img/esb/17.png)
+3. 绑定接出协议
+一个系统只能绑定一个接出协议
+![](/resource/img/esb/18.png)
+4. 绑定服务
+一个系统可以绑定多个服务，中间通过一条接出协议绑定
+![](/resource/img/esb/19.png)
+
+### 5.从头开始
+```text
+假定有一个渠道c1，接入协议为httpC1In6001，地址为http://127.0.0.1:6001/esb/c1
+有两个服务s1和s2，s1指向在http8081的sys1，s2指向在tcp10013的sys2
+```
+1. 协议管理
+    1. 新增接入协议
+![](/resource/img/esb/20.png)
+    2. 设置响应报文，从中回去接出协议地址
+    3. 新增http接出协议
+![](/resource/img/esb/21.png)
+    4. 新增tcp接出协议，与http类似
+2. 渠道管理
+![](/resource/img/esb/22.png)
+3. 服务管理
+    1. 新增服务s1
+![](/resource/img/esb/23.png)
+    2. 新增服务s2：与s1类似，只是协议适配为tcp的out
+4. 系统
+    1. 新增系统sys1
+![](/resource/img/esb/24.png)
+    2. 新增系统sys2：与sys2类似，只是配置为s2的out
+5. 识别规则
+    1. 新增in
+![](/resource/img/esb/25.png)
+    2. 新增out
+![](/resource/img/esb/26.png)
+6. 适配流程
+    1. 配置渠道的
+![](/resource/img/esb/27.png)
+    2. 配置服务的：与配置渠道的类似
+7. 测试
+
+### 6.配置拆组包工程
+1. 在PC端修改渠道的适配流程
+    1. 修改IN的适配流程
+![](/resource/img/esb/28.png)
+    2. 修改OUT的适配流程
+![](/resource/img/esb/29.png)
+2. 在ESB运行目录下添加拆组包文件
+```text
+IN：/SmartESB/configs/in_conf/metadata
+OUT：/SmartESB/configs/out_conf/metadata
+```
+公共的：
+    - metadata.xml元数据文件
+    ```xml
+    <? xml version="1.0" encoding="UTF-8"?>
+    <metadata>
+        <soldier type="string" length="3" />
+        <cardno type="string" length="5" />
+        <recode type="string" length="6" />
+    </metadata>
+    ```
+    - service_s1.xml服务s1配置文件
+    ```xml
+    <? xml version="1.0" encoding="UTF-8"?>
+    <s1>
+        <request>
+            <sdoroot>
+                <soldier metadataid="soldier" />
+                <cardno metadataid="cardno" />
+            </sdoroot>
+        </request>
+        <response>
+            <sdoroot>
+                <recode metadataid="recode" />
+            </sdoroot>
+        </response>
+    </s1>
+    ```
+为IN容器添加:
+    1. channel_c1_service_s1.xml 将前端的请求报文拆包成SDO
+    ```xml
+    <? xml version="1.0" encoding="UTF-8"?>
+    <res package_type="xml">
+        <soldier metadataid="soldier" />
+        <cardno metadataid="cardno" />
+    </root>
+    ```
+    2. service_s1_system_c1.xml 将SDO组包成前端可识别的响应报文
+    ```xml
+    <? xml version="1.0" encoding="UTF-8"?>
+    <res package_type="xml">
+        <recode metadataid="recode" />
+    </res>
+    ```
+为OUT容器添加：
+    1. service_s1_system_sys1.xml 将SDO组包成后端可识别的请求报文
+    ```xml
+    <? xml version="1.0" encoding="UTF-8"?>
+    <res package_type="fix">
+        <soldier metadataid="soldier" />
+        <cardno metadataid="cardno" />
+    </res>
+    ```
+    2. channel_sys1_service_s1 将后端的响应报文拆包成SDO
+    ```xml
+    <? xml version="1.0" encoding="UTF-8"?>
+    <res package_type="fix">
+        <recode metadataid="recode" />
+    </root>
+    ```
+3. 测试
+![](/resource/img/esb/30.png)
