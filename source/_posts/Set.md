@@ -6,7 +6,7 @@ date: 2020-11-16 11:29:03
 ---
 
 ## 1.HashSet简介
-HashSet与ArrayList类似，都是线程不安全的，但HashSet的底层是HashMap，调用add方法时只需要穿一个参数作为key，value是公共的Object对象 PRESENT
+HashSet与ArrayList类似，都是线程不安全的，但HashSet的底层是HashMap，调用add方法时只需要传一个参数作为key，value是公共的Object对象 PRESENT
 
 ## 2.HashSet线程不安全案例
 ```java
