@@ -26,7 +26,9 @@ after_script:
   - cd ./public
   - git init
   # 修改github的用户名
-  - git config user.name "soldiergit"
+  #- git config user.name "soldiergit"
+  # 【2021.05.12】设置用户名
+  - git config user.name "soldier_wyyx@163.com"
   # 修改email
   - git config user.email "soldier_wyyx@163.com"
   - git add .
@@ -34,6 +36,8 @@ after_script:
   - git commit -m "Travis CI Auto Builder at `date +"%Y-%m-%d %H:%M"`"
   # Travis_Token是在Travis官网中配置环境变量的名称（more options 选择 setting添加的值）
   - git push --force --quiet "https://${Github_Token}@${GH_REF}" master:master
+  # 【2021.05.12】也提交到码云
+  - git push --force --quiet "https://${Gitee_Token}@${GE_REF}" master:master
 
 # 只监测resource分支，resource是我存放源码的分支的名称，可根据自己情况设置
 branches:
@@ -45,6 +49,8 @@ env:
   global:
     # 设置GH_REF，注意更改yourname及末尾加上.git
     - GH_REF: github.com/soldiergit/soldiergit.github.io.git
+    # 【2021.05.12】码云的
+    - GE_REF: gitee.com/soldiergitee/soldiergitee.git
 
 # 配置通知（电子邮件、IRC、campfire等）
 # https://docs.travis-ci.com/user/notifications/
