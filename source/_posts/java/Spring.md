@@ -1,7 +1,7 @@
 ---
 title: Spring框架面试总结
 tags: [面试题, Java面试题, Spring， 框架]
-index_img: /resource/img/Spring.png
+index_img: /resource/img/java/Spring.png
 date: 2020-11-18 15:49:57
 ---
 
@@ -198,7 +198,7 @@ public OneService getService(int status) {
 5. **ISOLATION_SERIALIZABLE**：一个事务在执行的过程中完全看不到其他事务对数据库所做的更新。
 
 ## SpringMVC的工作原理了解嘛？
-![](/resource/img/SpringMVC.jpg)
+![](/resource/img/java/SpringMVC.jpg)
 <font color=#FF000>**流程说明**：</font>
 1. 客户端发送请求，直接请求到 DispatcherServlet；
 2. DispatcherServlet 根据请求信息调用 HandlerMapping，解析请求对应的 Handler；

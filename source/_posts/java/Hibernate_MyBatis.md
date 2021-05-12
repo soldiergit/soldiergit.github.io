@@ -1,7 +1,7 @@
 ---
 title: Hibernate和MyBatis的区别
 tags: [面试题, Java面试题, Hibernate, MyBatis， 框架, ORM框架]
-index_img: /resource/img/Hibernate_MyBatis.png
+index_img: /resource/img/java/Hibernate_MyBatis.png
 date: 2020-11-27 20:29:03
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: 聊聊Map集合？
 tags: [面试题, Java面试题, Map, 集合类不安全问题]
-index_img: /resource/img/Map.png
+index_img: /resource/img/java/Map.png
 date: 2020-11-16 11:59:33
 ---
 

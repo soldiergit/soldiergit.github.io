@@ -1,7 +1,7 @@
 ---
 title: CAS你知道吗？
 tags: [面试题, Java面试题, CAS, UnSafe]
-index_img: /resource/img/CAS.png
+index_img: /resource/img/java/CAS.png
 date: 2020-11-10 10:49:02
 ---
 
@@ -45,11 +45,11 @@ public final int getAndIncrement() {
 该方法中， **this** 指的是当前对象， **valueOffset** 指的是当前对象的内存偏移量（就是内存地址）
 
 ### UnSafe
-![](/resource/img/UnSafe.png)
+![](/resource/img/java/UnSafe.png)
 1. ***<font color=#FF000>UnSafe</font>*** 是CAS的核心类，由于Java无法直接访问底层系统，需要通过本地（native）方法来访问，UnSafe相当于是一个后门，基于该类可以直接操作特定内存的数据。<font color=#FF000>UnSafe类存在于sun.misc包中</font>（存在于rt.jar，JDK从娘胎里就携带的最基础类），其内部方法操作可以想C的指针一样直接操作内存，因为Java中CAS操作执行依赖于UnSafe类的方法。
  <font color=#FF000><u>*注意 UnSafe 类中所有方法都是native修饰的，也就是说UnSafe类中的方法都直接调用操作系统底层资源执行相应任务*</u></font>
 2. 变量**valueOffset** ，表示该变量值子啊内存中的<font color=#FF000>偏移地址</font>，因为UnSafe就是根据内存偏移地址获取数据的。
-![](/resource/img/valueOffset.png)
+![](/resource/img/java/valueOffset.png)
 3. 变量 value 用 volatile 修饰，保证了多线程中间的内存可见性。
 
 ## CAS是什么？
@@ -58,7 +58,7 @@ public final int getAndIncrement() {
 
 **CAS**并发原语体现在**Java**语言中就是**sun.misc.UnSafe**类中的各个方法。调用**UnSafe**类中的**CAS**方法，JVM会帮我们实现出<font color=#8A2BE2>**CAS汇编指令**</font>。这是6一种完全依赖于<font color=#FF000>硬件</font>的功能，通过它实现了原子操作。
 再次强调，由于CAS是一种系统原语，原语属于操作系统用语范畴，是由若干条指令组成的，用于完成某个功能的一个过程，<font color=#FF000>并且原语的执行必须是连续的，在执行过程中不允许被中断，也就是说CAS是一条CPU的原子指令，不会造成所谓的数据不一致问题。</font>
-![](/resource/img/CAS.png)
+![](/resource/img/java/CAS.png)
 ```text
 根据当前对象和当前对象的内存偏移量获取var5
 判断刚刚获取的var5是不是等于对象本身的值，相等的话，加上var4
@@ -73,7 +73,7 @@ var5 需要通过var1 var2 找出的主内存中真实存在的值，
 用该对象当前的值与var5比较；
 如果相同，更新var5+var4 并返回true，
 如果不同，继续取值然后再比较，直到更新完成。
-![](/resource/img/unsafe-getAndAddInt.png)
+![](/resource/img/java/unsafe-getAndAddInt.png)
 假设线程A和线程B两个线程同时执行getAndAddInt操作（分别跑在不同CPU上）：
 1. AtomicInteger里面的value原始值是5，即主内存中AtomicInteger的value为5，根据JMM模型，线程A和线程B各自持有一份值为5的value的副本分别到各自的工作内存；
 2. 线程A通过getIntVolatile(var1, var2)拿到value值为5，这是线程A被挂起；

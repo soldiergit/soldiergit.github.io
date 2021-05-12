@@ -1,7 +1,7 @@
 ---
 title: Vue框架面试总结
 tags: [面试题, Java面试题, Vue， 框架]
-index_img: /resource/img/Vue.png
+index_img: /resource/img/java/Vue.png
 date: 2020-11-25 15:49:57
 ---
 

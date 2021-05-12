@@ -1,7 +1,7 @@
 ---
 title: HTTP学习笔记
 tags: [基础知识, 计算机基础, HTTP]
-index_img: /resource/img/HTTP.jpg
+index_img: /resource/img/java/HTTP.jpg
 date: 2020-11-17 09:28:56
 ---
 
@@ -121,14 +121,14 @@ HTTP有以下安全性问题：
 加密和解密使用同一密钥。
  - **优点**：运算速度快；
  - **缺点**：无法安全地将密钥传输给通信方。
-![](/resource/img/SymmetricEncryption.png)
+![](/resource/img/java/SymmetricEncryption.png)
 
 #### 2.非对称加密
 又称为公开密钥加密，加密和解密使用不同的密钥。
 公开密钥所有人都可以获取，通信发送方获得接收方的公开密钥后，就可以使用公开密钥进行加密，接收方收到通信内容后使用私钥解密。
  - **优点**：可以更安全地将公开密钥传输给通信发送方；
  - **缺点**：运算速度慢。
-![](/resource/img/PublicKeyEncryption.png)
+![](/resource/img/java/PublicKeyEncryption.png)
 
 #### 3.HTTPS采用的加密方式
 上面提到的**对称加密**方式的传输效率更高，但是无法安全地将密钥Secret Key传输给通信方。而**非对称加密**方式可以保证传输的安全性，因此我们可以利用非对称加密方式将Secret Key传输给通信方。HTTPS采用混合的加密机制，正是利用了上面提到的方案：
@@ -142,9 +142,9 @@ HTTP有以下安全性问题：
 ## 四、网络传输层协议
 ### UDP和TCP的特点
  - **用户数据报协议 UDP**：是无连接的，尽最大可能交付，没有拥塞控制，<font color=#FF000>面向报文</font>，支持一对一、一对多、多对一、多对多的交互通信。
-![](/resource/img/UDP.jpg)
+![](/resource/img/java/UDP.jpg)
  - **传输控制协议 TCP**：是面向连接的，提供可靠交付，有流量控制、拥塞控制，提供全双工通信，<font color=#FF000>面向字节流</font>，只能一对一。
-![](/resource/img/TCP.png)
+![](/resource/img/java/TCP.png)
 
 ### TCP的三次握手
 假设A为客户端，B为服务器端。

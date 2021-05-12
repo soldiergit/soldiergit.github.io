@@ -1,7 +1,7 @@
 ---
 title: MySQL学习笔记及面试题
 tags: [基础知识, 数据库基础, MySQL, Java面试题, 框架]
-index_img: /resource/img/MySQL.jpeg
+index_img: /resource/img/java/MySQL.jpeg
 date: 2020-11-20 08:58:26
 ---
 
@@ -13,7 +13,7 @@ B Tree 指的是 Balance Tree，也就是平衡树。平衡树是一颗查找树
 B+ Tree 是基于 B Tree 和叶子节点顺序访问指针进行实现的，它具有 B Tree 的平衡性，并且通过顺序访问指针来提高区间查询的性能。
 
 在 B+ Tree 中，一个节点中的key从左到右非递减列，如果某个指针的左右相邻 key 分别是 key<sub>i</sub> 和 key<sub>i+1</sub>，且不为null，则该指针指向节点的所有 key 大于等于 key<sub>i</sub> 且小于等于 key<sub>i+1</sub>.
-![](/resource/img/B+Tree原理.png)
+![](/resource/img/java/B+Tree原理.png)
 
 #### 2.操作
 进行查找操作时，首先在根节点进行二分查找，找到一个 key 所在的指针，然后递归地在指针所指向的节点进行查找。直到查找到叶子节点，然后在叶子节点上进行二分查找，找出 key 所对应的 data。
@@ -49,10 +49,10 @@ B+ Tree 是基于 B Tree 和叶子节点顺序访问指针进行实现的，它�
 适用于全键值、键值范围和键前缀查找，其中键前缀查找只适用于最左前缀查找。如果不是按照索引列的顺序进行查找，则无法使用索引。
 
 InnoDB 的 B+ Tree 索引分为主索引和辅助索引。主索引的叶子节点 data 域记录着完整的数据记录，这种索引方式被称为聚簇索引。因此无法把数据行存放在两个不同的地方，所以一个表只能有一个聚簇索引。
-![](/resource/img/B+Tree索引1.png)
+![](/resource/img/java/B+Tree索引1.png)
 
 辅助索引的叶子节点的 data 域记录着主键的值，因此在使用辅助索引进行查询时，需要先查找主键值，然后再到主索引中进行查找。
-![](/resource/img/B+Tree索引2.png)
+![](/resource/img/java/B+Tree索引2.png)
 
 #### 2.哈希索引
 哈希索引能以 O(1) 时间进行查找，但是失去了有序性：
@@ -223,13 +223,13 @@ MySQL 提供了两种相似的日期时间类型：`DATETIME` 和 `TIMESTAMP`。
 <font color=#FF000>水平切分</font>又称为`Sharding`，它是将同一个表中的记录拆分到多个结构相同的表中。
 
 当一个表的数据不断增多时，Sharding 是必然的选择，它可以将数据分布到集群的不同节点上，从而缓存单个数据库的压力。
-![](/resource/img/MySQLSharding.jpg)
+![](/resource/img/java/MySQLSharding.jpg)
 
 ### 垂直切分
 <font color=#FF000>垂直切分</font>是将一个表按列切分成多个表，通常是按照列的关系密集程度进行切分，也可以利用垂直切分将经常被使用的列和不经常被使用的列切分到不同的表中。
 
 在数据库的层面使用垂直切分将按数据库中表的密集程度部署到不同的库中，例如：将原本的电商数据库垂直切分为商品数据库、用户数据库等。
-![](/resource/img/MySQLvVertical.jpg)
+![](/resource/img/java/MySQLvVertical.jpg)
 
 ### Sharding(水平切分)策略
  - **哈希取模**：hash(key) % N；
@@ -253,7 +253,7 @@ MySQL 提供了两种相似的日期时间类型：`DATETIME` 和 `TIMESTAMP`。
  - **binlog 线程**：负责将主服务器上的数据更改写入二进制日志（Binary log）中；
  - **I/O 线程**：负责从主服务器上读取二进制日志，并写入从服务器的中继日志（Relay log）中；
  - **SQL 线程**：负责读取中继日志，解析出主服务器已经执行的数据更改并在从服务器中重放（Replay）。
-![](/resource/img/MasterSlave.png)
+![](/resource/img/java/MasterSlave.png)
 ### 读写分离
 <font color=#FF000>概念</font>：主服务器处理写操作以及实时性要求比较高的读操作，而从服务器处理读操作。
 读写分离能提高性能的主要原因在于：
@@ -262,7 +262,7 @@ MySQL 提供了两种相似的日期时间类型：`DATETIME` 和 `TIMESTAMP`。
  - 增加冗余，提高可用性。
 
 读写分离常用`代理方式`来实现，代理服务器接收应用层传来的读写请求，然后决定转发到哪个服务器。
-![](/resource/img/MySQLProxy.png)
+![](/resource/img/java/MySQLProxy.png)
 
 ## 谈谈select语句执行过程？
 MySQL 查询的大致语法结构如下：

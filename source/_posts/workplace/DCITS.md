@@ -1,7 +1,7 @@
 ---
-title: 2020年12月14日西安神州数码融信软件有限公司岗前培训一个月
-tags: [神州信息金融SBU岗前培训]
-index_img: /resource/img/DCITS.jpeg
+title: 西安神州数码融信软件有限公司
+tags: [职场, 神州信息金融SBU岗前培训]
+index_img: /resource/img/workplace/DCITS/DCITS.jpeg
 date: 2020-12-15 08:53:02
 ---
 
@@ -1151,59 +1151,59 @@ natstat -an | findstr 4545
 httpPosIn6001
 http://127.0.0.1:6001/esb/pos
 ```
-![](/resource/img/esb/1.png)
+![](/resource/img/workplace/DCITS/esb/1.png)
 下方接入协议
-![](/resource/img/esb/2.png)
+![](/resource/img/workplace/DCITS/esb/2.png)
 
 2. 配置接出协议
     1. 先设置http服务提供方响应报文，然后复制自动出现的地址
     ```text
     http://127.0.0.1:80081/rsbconsole/httpServer
     ```
-    ![](/resource/img/esb/3.png)
+    ![](/resource/img/workplace/DCITS/esb/3.png)
     2. 然后设置接出协议
-    ![](/resource/img/esb/4.png)
+    ![](/resource/img/workplace/DCITS/esb/4.png)
     3. 下发接出协议
-    ![](/resource/img/esb/5.png)
+    ![](/resource/img/workplace/DCITS/esb/5.png)
 3. 配置渠道：pos
-![](/resource/img/esb/6.png)
+![](/resource/img/workplace/DCITS/esb/6.png)
 4. 配置服务：posSvc
-![](/resource/img/esb/7.png)
+![](/resource/img/workplace/DCITS/esb/7.png)
 5. 配置识别规则
-![](/resource/img/esb/8.png)
+![](/resource/img/workplace/DCITS/esb/8.png)
 6. 测试
-![](/resource/img/esb/9.png)
+![](/resource/img/workplace/DCITS/esb/9.png)
 
 ### 2.配置动态识别规则
 `渠道绑定服务`
 1. 适配管理→识别规则管理
-![](/resource/img/esb/10.png)
+![](/resource/img/workplace/DCITS/esb/10.png)
 2. 测试
-![](/resource/img/esb/11.png)
+![](/resource/img/workplace/DCITS/esb/11.png)
 
 ### 3.新增系统识别
 `服务绑定系统`
 1. 新增out识别规则
-![](/resource/img/esb/12.png)
+![](/resource/img/workplace/DCITS/esb/12.png)
 2. 修改系统识别
-![](/resource/img/esb/13.png)
+![](/resource/img/workplace/DCITS/esb/13.png)
 3. 测试
     1. 测试001
-![](/resource/img/esb/14.png)
+![](/resource/img/workplace/DCITS/esb/14.png)
     2. 测试002
-![](/resource/img/esb/15.png)
+![](/resource/img/workplace/DCITS/esb/15.png)
 
 ### 4.新增系统
 1. 添加core银行管理系统
-![](/resource/img/esb/16.png)
+![](/resource/img/workplace/DCITS/esb/16.png)
 2. 系统名
-![](/resource/img/esb/17.png)
+![](/resource/img/workplace/DCITS/esb/17.png)
 3. 绑定接出协议
 一个系统只能绑定一个接出协议
-![](/resource/img/esb/18.png)
+![](/resource/img/workplace/DCITS/esb/18.png)
 4. 绑定服务
 一个系统可以绑定多个服务，中间通过一条接出协议绑定
-![](/resource/img/esb/19.png)
+![](/resource/img/workplace/DCITS/esb/19.png)
 
 ### 5.从头开始
 ```text
@@ -1212,38 +1212,38 @@ http://127.0.0.1:6001/esb/pos
 ```
 1. 协议管理
     1. 新增接入协议
-![](/resource/img/esb/20.png)
+![](/resource/img/workplace/DCITS/esb/20.png)
     2. 设置响应报文，从中获取接出协议地址
     3. 新增http接出协议
-![](/resource/img/esb/21.png)
+![](/resource/img/workplace/DCITS/esb/21.png)
     4. 新增tcp接出协议，与http类似
 2. 渠道管理
-![](/resource/img/esb/22.png)
+![](/resource/img/workplace/DCITS/esb/22.png)
 3. 服务管理
     1. 新增服务s1
-![](/resource/img/esb/23.png)
+![](/resource/img/workplace/DCITS/esb/23.png)
     2. 新增服务s2：与s1类似，只是协议适配为tcp的out
 4. 系统
     1. 新增系统sys1
-![](/resource/img/esb/24.png)
+![](/resource/img/workplace/DCITS/esb/24.png)
     2. 新增系统sys2：与sys2类似，只是配置为s2的out
 5. 识别规则
     1. 新增in
-![](/resource/img/esb/25.png)
+![](/resource/img/workplace/DCITS/esb/25.png)
     2. 新增out
-![](/resource/img/esb/26.png)
+![](/resource/img/workplace/DCITS/esb/26.png)
 6. 适配流程
     1. 配置渠道的
-![](/resource/img/esb/27.png)
+![](/resource/img/workplace/DCITS/esb/27.png)
     2. 配置服务的：与配置渠道的类似
 7. 测试
 
 ### 6.配置拆组包工程
 1. 在PC端修改渠道的适配流程
     1. 修改IN的适配流程
-![](/resource/img/esb/28.png)
+![](/resource/img/workplace/DCITS/esb/28.png)
     2. 修改OUT的适配流程
-![](/resource/img/esb/29.png)
+![](/resource/img/workplace/DCITS/esb/29.png)
 2. 在ESB运行目录下添加拆组包文件
 ```text
 IN：/SmartESB/configs/in_conf/metadata
@@ -1309,19 +1309,19 @@ OUT：/SmartESB/configs/out_conf/metadata
     </root>
     ```
 3. 测试
-![](/resource/img/esb/30.png)
+![](/resource/img/workplace/DCITS/esb/30.png)
 
 ### 7.配置流水日志
 1. 为esb的journal配置数据库并启动
-![](/resource/img/esb/31.png)
+![](/resource/img/workplace/DCITS/esb/31.png)
 在esb安装目录的bin目录下面找到`startJournal`启动
 2. 适配流程管理
-![](/resource/img/esb/32.png)
+![](/resource/img/workplace/DCITS/esb/32.png)
 3. 测试
-![](/resource/img/esb/33.png)
+![](/resource/img/workplace/DCITS/esb/33.png)
 4. 还可以通过参数配置IN/OUT记录流水
 这里配置了记录IN的第一个流水
-![](/resource/img/esb/34.png)
+![](/resource/img/workplace/DCITS/esb/34.png)
 
 
 ### 8.配置全报文流水日志
@@ -1332,25 +1332,25 @@ OUT：/SmartESB/configs/out_conf/metadata
 `冲正`：一般在银行里，ESB自动冲正，将错账冲销，主要用于保证事务的一致性。
 
 1. 流水策略配置
-![](/resource/img/esb/35.png)
+![](/resource/img/workplace/DCITS/esb/35.png)
 2. 流水信息查询
-![](/resource/img/esb/36.png)
+![](/resource/img/workplace/DCITS/esb/36.png)
 
 ### 9.流量控制
 业务监控、服务器监控
 1. 启动主备流量控制
-![](/resource/img/esb/37.png)
+![](/resource/img/workplace/DCITS/esb/37.png)
 `两个同时启动`
 2. PC端节点管理
-![](/resource/img/esb/38.png)
+![](/resource/img/workplace/DCITS/esb/38.png)
 3. 流程令牌管理
-![](/resource/img/esb/39.png)
+![](/resource/img/workplace/DCITS/esb/39.png)
 4. 流程维度管理
-![](/resource/img/esb/40.png)
+![](/resource/img/workplace/DCITS/esb/40.png)
 5. 适配流程管理
-![](/resource/img/esb/41.png)
+![](/resource/img/workplace/DCITS/esb/41.png)
 6. 测试
-![](/resource/img/esb/42.png)
+![](/resource/img/workplace/DCITS/esb/42.png)
 
 ## 神州信息SOA3.0企业级微服务平台
 刘天

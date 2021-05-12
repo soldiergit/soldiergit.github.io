@@ -1,7 +1,7 @@
 ---
 title: 请谈谈你对volatile的理解
 tags: [面试题, Java面试题, JMM, volatile]
-index_img: /resource/img/thread_visit_memory.png
+index_img: /resource/img/java/volatile.png
 date: 2020-11-03 10:44:24
 ---
 
@@ -17,7 +17,7 @@ date: 2020-11-03 10:44:24
 **3.** 加锁解锁是同一把锁
 
 由于JVM运行程序的实体是线程，而每个线程创建时JVM都会为其创建一个工作内存（有些地方称为栈空间），工作内存是每个线程的私有数据区域，而Java内存模型（JMM）中规定所有的变量都存储在<font color=#FF000>主内存</font>，主内存是共享内存区域，所有线程的可以访问，<font color=#FF000>但线程对变量的操作（读取赋值等）必须在工作内存中进行，首先要将变量从主内存拷贝到自己的工作内存空间，然后对变量进行操作，操作完成后再将变量写回主内存</font>，不能直接操作主内存中的变量，各个线程中的工作内存中存储着主内存中的<font color=#0000F>变量副本拷贝</font>，因此不同的线程间无法访问对方的工作内存，线程间的通信（传值）必须通过主内存来完成，其简要访问过程如下图：
-![](/resource/img/thread_visit_memory.png)
+![](/resource/img/java/volatile.png)
 
 ## JMM你谈谈
 ### JMM的可见性
@@ -122,7 +122,7 @@ public class VolatileDemo {
 
 ### 有序性
 &nbsp;&nbsp;计算机在执行程序时，为了提高性能，编译器和处理器常常会对<font color=#FF000>指令做重排</font>，一般分为一下3种：
-![](/resource/img/JMM_rearrangement.png)
+![](/resource/img/java/JMM_rearrangement.png)
 1. 单线程环境里面确保程序最终执行结果和代码顺序执行的结果一致。即<font color=#FF000>单线程环境下不用担心指令重排</font>；
 2. 处理器在进行重排序时必须要考虑指令之间的<font color=#FF000>**数据依赖性**</font>；
 3. 多线程环境中线程交替执行，由于编译器优化重排的存在，两个线程中使用的变量能否保证一致性是无法确定的，结果无法预测。

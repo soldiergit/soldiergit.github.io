@@ -1,7 +1,7 @@
 ---
 title: 排序算法学习笔记
 tags: [基础知识, 算法, 排序]
-index_img: /resource/img/Sort.png
+index_img: /resource/img/java/Sort.png
 date: 2020-11-24 11:20:00
 ---
 
@@ -124,7 +124,7 @@ public class Insertion<T extends Comparable<T>> extends Sort<T> {
 <font color=#FF000>**概念**</font>：对于大规模的数组，插入排序很慢，因为它只能交换相邻的元素，每次只能将逆序数量减少1。希尔排序的出现就是为了解决插入排序的这种局限性，它通过**交换不相邻的元素**，每次可以将逆序数量减少大于1.
 
 希尔排序使用插入排序对间隔 h 的序列进行排序。通过不断减少 h，最后令 h=1，就可以使得整个数组是有序的。
-![](/resource/img/Sort_shell.png)
+![](/resource/img/java/Sort_shell.png)
 
 **实现**：
 ```java
@@ -157,7 +157,7 @@ public class Shell<T extends Comparable<T>> extends Sort<T> {
 
 ## 归并排序
 <font color=#FF000>**概念**</font>：是将数组分成两部分，分别进行排序，然后归并起来。
-![](/resource/img/Sort_merge.png)
+![](/resource/img/java/Sort_merge.png)
 
 ### 1.公共的归并方法
 **归并方法**将数组中两个已经排序的部分归并成一个。它基础自约定Sort类，是两种类型的归并排序的父类，内含公共的合并方法。
@@ -254,7 +254,7 @@ public class Down2UpMergeSort<T extends Comparable<T>> extends MergeSort<T> {
  - 归并排序将数组分为两个子数组分别排序，并将有序的子数组归并使得整个数组排序；
  - 快速排序通过一个切分元素将数组分为两个子数组，左子数组小于切分元素，右子数组大于等于切分元素，将这两个子数组排序也就将整个数组排序了。
  
-![](/resource/img/Sort_quick.png)
+![](/resource/img/java/Sort_quick.png)
 ```java
 public class QuickSort<T extends Comparable<T>> extends Sort<T> {
     @Override
@@ -279,7 +279,7 @@ public class QuickSort<T extends Comparable<T>> extends Sort<T> {
 ```
 ### 2.切分
 将 a[l] 作为切分元素，然后从数组的左端向右扫描直到找到第一个大于等于它的元素，再从数组的右端向左扫描找到第一个小于它的元素，交换这两个元素。不断进行这个过程，就可以保证左指针 i 的左侧元素都不大于切分元素，右指针 j 的右侧元素都不小于切分元素。当两个指针相遇时，将切分元素 a[l] 和 a[j] 交换位置。
-![](/resource/img/Sort_partition.gif)
+![](/resource/img/java/Sort_partition.gif)
 ```java
 private int partition(T[] nums, int l, int h) {
     int i = l, j = h + 1;
@@ -365,7 +365,7 @@ public T select(T[] nums, int k) {
 堆中某个节点的值总是大于等于或小于其子节点的值，并且堆是一颗完全二叉树。
 
 堆可以用数组来表示，这是因为堆是完全二叉树，而完全二叉树很容易就存储在数组中。位置 k 的节点的父节点位置为 k/2，而它的两个子节点的位置分别为 2k 和 2k+1.这里不使用数组索引为0的位置，是为了更清晰地描述节点的位置关系。
-![](/resource/img/Sort_heap.png)
+![](/resource/img/java/Sort_heap.png)
 ```java
 public class Heap<T extends Comparable<T>> {
     
@@ -400,7 +400,7 @@ public class Heap<T extends Comparable<T>> {
 
 ### 2.上浮和下沉
 在堆中，当一个节点比父节点大，那么需要交换这两个节点。交换后还可能比它新的父节点大，因此需要不断地进行比较和交换操作，把这种操作称为上浮。
-![](/resource/img/Sort_heap_swim.gif)
+![](/resource/img/java/Sort_heap_swim.gif)
 ```java
 private void swim(int k) {
     while (k > 1 && less(k /2, k)) {
@@ -410,7 +410,7 @@ private void swim(int k) {
 }
 ```
 类似的，当一个节点比子节点小，也需要不断地向下进行比较和交换操作，把这种操作称为下沉。一个节点如果有两个子节点，应当与两个子节点中最大那个节点进行交换。
-![](/resource/img/Sort_heap_sink.gif)
+![](/resource/img/java/Sort_heap_sink.gif)
 ```java
 private void sink(int k) {
     while (2 * k <= n) {
