@@ -1,0 +1,689 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/resource/img/favicon.png">
+  <link rel="icon" type="image/png" href="/resource/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="soldier">
+  <meta name="keywords" content="">
+  <title>Hibernate和MyBatis的区别 - 黄结的个人博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>soldier</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/about/">
+                    
+                    个人简历
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://soldiergit.github.io/honor/">
+                    
+                    项目及获奖
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-27 20:29" pubdate>
+        2020年11月27日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      37
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">Hibernate和MyBatis的区别</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="Hibernate"><a href="#Hibernate" class="headerlink" title="Hibernate"></a>Hibernate</h3><p><strong>Hibernate</strong> 是一个开源的对象关系映射框架，它对 JDBC 进行了非常轻量级的对象封装，它将 POJO 与数据库建立映射关系，是一个全自动的 ORM 框架。</p>
+<ul>
+<li>Hibernate 可以自动生成简单的 SQL 语句，自动执行，对于复杂的 SQL 语句，Hibernate 不需要自己编写，因为它的性能不是很好；</li>
+<li>Hibernate可以应用在任何使用JDBC的场合，既可以在Java的客户端程序使用，也可以在Servlet/JSP的Web应用中使用，最具革命意义的是，Hibernate可以在应用EJB的JaveEE架构中取代CMP，完成数据持久化的重任。</li>
+</ul>
+<h3 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h3><p><strong>MyBatis</strong> 本事 Apache 的一个开源项目 iBatis，是一款优秀的半自动 ORM 框架，避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集。</p>
+<ul>
+<li>是一个支持普通的 SQL 查询、存储过程和高级映射的优秀持久层框架；</li>
+<li>可以自动生成简单的 SQL 语句，自动执行；对于复杂的 SQL，需要自己编写，因此具有更好的性能；</li>
+<li>不能自动创建表；</li>
+<li>可以使用简单的 XML 或注解来配置和映射原生信息，将接口和 Java 的 POJOs（普通的 Java 对象）映射成数据库中的记录</li>
+</ul>
+<p><code>MyBatis 相比于 JDBC 的优点</code>：<br>把 SQL 语句从 Java 代码中抽取出来，方便维护。并且修改 SQL 时不需要修改 Java 代码，不用手动设置参数和对结果集进行处理。</p>
+<h2 id="Hibernate-和-MyBatis-的区别"><a href="#Hibernate-和-MyBatis-的区别" class="headerlink" title="Hibernate 和 MyBatis 的区别"></a>Hibernate 和 MyBatis 的区别</h2><ul>
+<li><p>Hibernate 是一个全自动 ORM 框架，功能更加强大，操作更加简单，不需要自己写 SQL，所以不需要掌握数据库相关知识，但性能不好控制，适合中小型项目；</p>
+</li>
+<li><p>MyBatis 是一个半自动 ORM 框架，也封装了很多原生的 SQL，需要了解数据库相关知识，需要自己写 SQL ，性能可控。</p>
+</li>
+</ul>
+<h3 id="开发速度对比"><a href="#开发速度对比" class="headerlink" title="开发速度对比"></a>开发速度对比</h3><p>就开发速度而言，Hibernate 的真正掌握要比 MyBatis 要难。MyBatis 框架相对简单容易上手，但也相对简陋些。个人觉得要用好 MyBatis 还是要先理解好 Hibernate。</p>
+<p>比起二者的开发速度，不仅仅要考虑到二者的特性及性能，还要根据项目需求去考虑究竟哪个更适合项目开发：一个项目中用到的复杂查询基本没有，就是简单的增删改查，这样选择 Hibernate 效率就很快了，因为基本的 SQL 语句都已经被封装好了；但是对于一个大型项目，复杂语句较多，选择 MyBatis 就会快很多，而且语句的管理也比较方便。</p>
+<h3 id="开发工作量的对比"><a href="#开发工作量的对比" class="headerlink" title="开发工作量的对比"></a>开发工作量的对比</h3><p>Hibernate 和 MyBatis 都有相应的代码生成工具，可以生成简单基本的 DAO 层方法。针对高级查询，MyBatis 需要手动编写 SQL 语句，以及 ResultMap。而 Hibernate 有良好的映射机制，开发者无需关心 SQL 的生成以及结果映射，可以更专注于业务流程。</p>
+<h3 id="sql-优化方面"><a href="#sql-优化方面" class="headerlink" title="sql 优化方面"></a>sql 优化方面</h3><p>Hibernate 的查询会将表中的所有字段查询出来，这一点会有性能消耗，当然也可以自己写 SQL 来指定，但这样就破坏了 Hibernate 开发的简洁性。而 MyBatis 的 SQL 是手动编写的，所以可以按需求指定查询的字段。</p>
+<p>Hibernate HQL 语句的调优需要将 SQL 打印出来，而 Hibernate 的 SQL 被很多人嫌弃太丑；MyBatis 的 SQL 是自己手动写的所以调整方便。但 Hibernate 具有自己的日志统计；MyBatis 本身不带日志统计，使用 Log4j 进行日志记录。</p>
+<h3 id="对象管理的对比"><a href="#对象管理的对比" class="headerlink" title="对象管理的对比"></a>对象管理的对比</h3><p>Hibernate 是完整的对象/关系映射解决方案，它提供了对象状态管理(state management)的功能，使开发者不再需要理会底层数据库系统的细节。</p>
+<ul>
+<li>相对于常见的 JDBC/SQL 持久层方案中需要管理 SQL 语句，Hibernate 采用了更自然的面向对象的视角来持久化 Java 应用中的数据。</li>
+<li>使用 Hibernate 的开发者应该总是关注对象的状态state，不必考虑 SQL 语句的执行，因为这部分细节已经由 Hibernate 掌管妥当，只有开发者子啊进行系统性能调优的时候才需要进行了解。而MyBatis 在这一块没有文档说明，用户需要自己对对象进行详细的管理。</li>
+</ul>
+<h3 id="数据库扩展性计较"><a href="#数据库扩展性计较" class="headerlink" title="数据库扩展性计较"></a>数据库扩展性计较</h3><ul>
+<li>Hibernate 与数据库具体的关联在 XML 文件中，所以 HQL 对具体是用什么数据库并不是很关心；</li>
+<li>MyBatis 由于所有 SQL 都是依赖数据库书写的，所以扩展性、迁移性比较差。</li>
+</ul>
+<h2 id="缓存机制对比"><a href="#缓存机制对比" class="headerlink" title="缓存机制对比"></a>缓存机制对比</h2><h3 id="Hibernate-缓存"><a href="#Hibernate-缓存" class="headerlink" title="Hibernate 缓存"></a>Hibernate 缓存</h3><ul>
+<li>一级缓存是 Session 缓存，利用好一级缓存就需要严格管理好 Session 的生命周期。建议在一个Action 操作中使用一个 Session；</li>
+<li>二级缓存是 SessionFactory 级的缓存或进程级缓存，它可以被所有 Session 共享，它的生命周期伴随着 SessionFactory 的生命周期存亡，除了以内存作为存储介质外，还可以选用硬盘等外部存储设备。SessionFactory 的缓存分为内置缓存和外置缓存：<ul>
+<li>内置缓存中存放的是 SessionFactory 对象的一些集合属性包含的数据（映射元素及预定 SQL 语句等），对于应用程序来说，它是只读的；</li>
+<li>外置缓存中存放的是数据库数据的副本，其作用和一级缓存类似。</li>
+</ul>
+</li>
+</ul>
+<h3 id="MyBatis-缓存"><a href="#MyBatis-缓存" class="headerlink" title="MyBatis 缓存"></a>MyBatis 缓存</h3><p>MyBatis 包含一个非常强大的查询缓存特性，可以方便地配置和定制。MyBatis 3中的缓存实现了很多改进，使得它更加强大且易于配置。</p>
+<p>MyBatis 的一级缓存是在会话（SqlSession）层面进行缓存的。MyBatis 的一级缓存是默认开启的，不需要任何的配置。<br>要开启二级缓存，你需要在你的 SQL 映射文件中添加<code>&lt;cache/&gt;</code>标签，这个简单的语句效果如下：</p>
+<ol>
+<li>映射语句文件中所有的 select 语句将会被缓存；</li>
+<li>映射语句文件中所有的 insert、update 和 delete 语句会刷新缓存；</li>
+<li>缓存会使用 LRU算法（Last Recently Used，最近最少使用）来回收；</li>
+<li>根据时间表（比如：no Flush Interval，没有刷新间隔），缓存不会以任何时间顺序来刷新；</li>
+<li>缓存会存储列表集合或对象（无论查询方法返回什么）的1024个引用；</li>
+<li>缓存会被视为 read/write（可读/可写）的缓存，意味着对象检索不是共享的，而且可以安全地被调用者修改，而不干扰其它调用者或线程所做的潜在修改。</li>
+</ol>
+<p>所有的这些属性都可以通过缓存元素的属性来修改：<code>&lt;cache eviction=”FIFO” flushInterval=”60000″ size=”512″ readOnly=”true”/&gt;</code><br>这个更高级的配置创建了一个 FIFO 缓存，并每隔60秒刷新，存数列表集合或对象的512个引用，而且返回的对象被认为是只读的，因此在不同线程中的调用者之间修改它们会导致冲突。可用的回收策略有：</p>
+<ol>
+<li>LRU（默认）-最近最少使用：移除最长时间不被使用的对象；</li>
+<li>FIFO-先进先出：按对象进入缓存的顺序来移除它们；</li>
+<li>SOFT-软引用：移除基于垃圾回收器状态和软引用规则的对象；</li>
+<li>WEAK-弱引用：更积极地移除基于垃圾收集器状态和弱引用规则的对象。</li>
+</ol>
+<p><em>参数解析：</em></p>
+<ul>
+<li><strong>eviction</strong>：指定缓存回收策略；</li>
+<li><strong>flushInterval</strong>：指定缓存刷新间隔，可以被设置为任意的正整数，而且它们代表一个合理的毫秒形式的时间段，默认情况是不设置的，也就是没有刷新间隔，缓存仅仅调用语句时才刷新；</li>
+<li><strong>size</strong>：指定缓存引用数目，可以被设置为任意的正整数，要记住你缓存的对象数目和你运行环境的可用内存资源数目，默认值是1024；</li>
+<li><strong>readOnly</strong>：只读，可以被设置为 true 或 false，只读的缓存会给所有调用者返回缓存对象的相同实例，因此这些对象不能被修改，这提供了很重要的性能优势（可读写的缓存会返回缓存对象的拷贝(通过序列化)。这会慢一些,但是安全,因此默认是 false）；</li>
+</ul>
+<h3 id="相同点"><a href="#相同点" class="headerlink" title="相同点"></a>相同点</h3><p>Hibernate 和 MyBatis 的二级缓存除了采用系统默认的缓存机制外，预留了集成第三方缓存的接口，都可以通过实现你自己的缓存或为其它第三方缓存方案，创建适配器来完全覆盖缓存行为。</p>
+<h3 id="不同点"><a href="#不同点" class="headerlink" title="不同点"></a>不同点</h3><ul>
+<li>Hibernate 的二级缓存配置在 SessionFactory 生成的配置文件中进行详细配置，然后再在具体的数据库表—Java对象映射中配置是那种缓存；</li>
+<li>MyBatis 的二级缓存配置都是在每个具体的数据库表—Java对象映射中进行详细配置，这样针对不同的表可以使用不用的缓存机制，并且 MyBatis 可以在命名空间中共享相同的缓存配置和实例，通过 <code>Cache-ref</code> 来实现。</li>
+</ul>
+<p><font color=#FF000><em>两者比较：</em></font></p>
+<ul>
+<li>因为 Hibernate 对查询对象有着良好的管理机制，用户无需关心 SQL。所以在使用二级缓存时如果出现脏数据，系统会报出错误并提示；</li>
+<li>MyBatis在这方面使用二级缓存是需要特别小心，如果不能完全确定数据更新操作波及的范围，就要避免 Cache 的使用，否则脏数据的出现会给系统的正常运行带来很大的隐患。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="两个框架的相同点"><a href="#两个框架的相同点" class="headerlink" title="两个框架的相同点"></a>两个框架的相同点</h3><p>Hibernate 和 MyBatis 都可以通过 SessionFactoryBuilder 由 XML 配置文件生成 SessionFactory，然后由 SessionFactory 生成 Session，最后由 Session 来开启执行事务和 SQL 语句。</p>
+<ul>
+<li>其中 SessionFactoryBuilder、SessionFactory、Session 的生命周期都差不多；</li>
+<li>Hibernate 和 MyBatis 都支持 JDBC 和 JTA（Java Transaction API：Java 事务编程接口） 事务处理。</li>
+</ul>
+<h3 id="MyBatis-优势"><a href="#MyBatis-优势" class="headerlink" title="MyBatis 优势"></a>MyBatis 优势</h3><ul>
+<li>MyBatis 可以进行更为细致的 SQL 优化，可以减少查询字段；</li>
+<li>MyBatis 容易掌握，而 Hibernate 门槛较高。</li>
+</ul>
+<h3 id="Hibernate-优势"><a href="#Hibernate-优势" class="headerlink" title="Hibernate 优势"></a>Hibernate 优势</h3><ul>
+<li>Hibernate 的 DAO 层开发比 MyBatis 简单，MyBatis 需要维护 SQL 和结果映射；</li>
+<li>Hibernate 对对象的维护和缓存要比 MyBatis 好，对 CRUD 的对象的维护要方便；</li>
+<li>Hibernate 数据库移植性很好，而 MyBatis 的数据库移植性不好，因为不同的数据库要写不同的 SQL；</li>
+<li>Hibernate 有更好的二级缓存机制，可以使用第三方缓存，而 MyBatis 本身提供的缓存机制不佳；</li>
+</ul>
+<h2 id="MyBatis中-和-的区别"><a href="#MyBatis中-和-的区别" class="headerlink" title="MyBatis中#{}和${}的区别"></a>MyBatis中#{}和${}的区别</h2><p><code>#&#123;&#125;</code> 是预编译处理，<code>$&#123;&#125;</code> 是字符串替换：</p>
+<ul>
+<li>MyBatis 在处理 #{} 时，会把 SQL 中的 #{} 替换为 ?(SQL占位符)，调用 PreparedStatement 的 set 方法来赋值；</li>
+<li>MyBatis 在处理 ${} 时，就是把 ${} 替换为变量的值；</li>
+<li><font color=#FF000>重点</font>：#{} 的存在与 JDBC 中出现 PreparedStatement 对象一样，都是为了防止 SQL 注入，提高系统安全性。</li>
+</ul>
+<h2 id="MyBatis中实体类的属性名和数据库表的字段名不一样怎么办？"><a href="#MyBatis中实体类的属性名和数据库表的字段名不一样怎么办？" class="headerlink" title="MyBatis中实体类的属性名和数据库表的字段名不一样怎么办？"></a>MyBatis中实体类的属性名和数据库表的字段名不一样怎么办？</h2><ol>
+<li>通过在<code>mapper.xml</code>查询的 SQL 语句中使用 AS 关键字（也可以省略）定义字段的别名，让其与实体类的属性名一致：<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">”select”</span> <span class="hljs-attr">parametertype</span>=<span class="hljs-string">”int”</span> <span class="hljs-attr">resultetype</span>=<span class="hljs-string">”com.soldier.xxxEntity”</span>&gt;</span>
+   select order_id orderId, order_no orderNo ,order_price orderPrice form orders where order_id=#&#123;id&#125;;
+<span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span></code></pre></li>
+<li>通过在<code>mapper.xml</code>中使用 <resultMap/> 标签来映射数据库表与实体类的对应关系：<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">resultMap</span> <span class="hljs-attr">type</span>=<span class="hljs-string">”com.soldier.xxxEntity”</span> <span class="hljs-attr">id</span>=<span class="hljs-string">”orderResultMap”</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">!–用id属性来映射主键字段–</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">id</span> <span class="hljs-attr">property</span>=<span class="hljs-string">”orderId”</span> <span class="hljs-attr">column</span>=<span class="hljs-string">”order_id”</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">property</span> = <span class="hljs-string">“orderNo”</span> <span class="hljs-attr">column</span> =<span class="hljs-string">”order_no”/</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">property</span>=<span class="hljs-string">”orderPrice”</span> <span class="hljs-attr">column</span>=<span class="hljs-string">”order_price”/</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">reslutMap</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">”select”</span> <span class="hljs-attr">parametertype</span>=<span class="hljs-string">”int”</span> <span class="hljs-attr">resulteMap</span>=<span class="hljs-string">”orderResultMap”</span>&gt;</span>
+   select order_id, order_no, order_price form orders where order_id=#&#123;id&#125;;
+<span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span></code></pre>
+
+</li>
+</ol>
+<h2 id="简述Mybatis的插件运行原理，以及如何编写一个插件"><a href="#简述Mybatis的插件运行原理，以及如何编写一个插件" class="headerlink" title="简述Mybatis的插件运行原理，以及如何编写一个插件"></a>简述Mybatis的插件运行原理，以及如何编写一个插件</h2><p><strong>答：</strong> MyBatis 仅可以编写针对 ParameterHandler、ResultSetHandler、StatementHandler、Executor这四个接口的插件，MyBatis 使用 JDK 的动态代理，为需要拦截的接口生成代理对象以实现接口方法拦截功能，每当执行这4种接口对象的方法时，就会进入拦截方法，具体就是 InvocationHandler 的 invoke() 方法，当然只会拦截那些你指定需要拦截的方法。</p>
+<p><strong>编写插件：</strong> 实现 MyBatis 的 Interceptor 接口并复写 intercept() 方法，然后在给插件编写注解，指定要拦截哪一个接口的哪些方法即可，还要在配置文件中配置编写好的插件。</p>
+<h2 id="MyBatis是如何进行分页的？分页插件的原理是什么？"><a href="#MyBatis是如何进行分页的？分页插件的原理是什么？" class="headerlink" title="MyBatis是如何进行分页的？分页插件的原理是什么？"></a>MyBatis是如何进行分页的？分页插件的原理是什么？</h2><p>MyBatis 使用 RowBounds 对象进行分页，它是针对 ResultSet 结果集执行的内存分页，而非物理分页。可以在 SQL 内直接书写带有物理分页的参数来完成物理分页功能，也可以使用分页插件来完成物理分页。</p>
+<p>分页插件的基本原理是使用 MyBatis 提供的插件接口，实现自定义插件，在插件的拦截方法内拦截待执行的 SQL，然后重写 SQL，根据 dialect 方言，添加对应的物理分页语句和物理分页参数。</p>
+<h2 id="Hibernate-的工作原理"><a href="#Hibernate-的工作原理" class="headerlink" title="Hibernate 的工作原理"></a>Hibernate 的工作原理</h2><ol>
+<li>读取并解析配置文件；</li>
+<li>读取并解析映射信息，创建 SessionFactory；</li>
+<li>打开 Session；</li>
+<li>创建事务 Transaction；</li>
+<li>持久化操作；</li>
+<li>提交事务；</li>
+<li>关闭 Session；</li>
+<li>关闭 SessionFactory。</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Java%E9%9D%A2%E8%AF%95%E9%A2%98/">Java面试题</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Hibernate/">Hibernate</a>
+                    
+                      <a class="hover-with-bg" href="/tags/MyBatis%EF%BC%8C-%E6%A1%86%E6%9E%B6/">MyBatis， 框架</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ORM%E6%A1%86%E6%9E%B6/">ORM框架</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/15/workplace/DCITS/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">西安神州数码融信软件有限公司</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/25/java/Vue/">
+                        <span class="hidden-mobile">Vue框架面试总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://soldiergit.github.io/" target="_blank" rel="nofollow noopener"><span>Copyright © 2020 soldier Powered by Hexo Fluid Core on Kubernetes</span></a> <i class="iconfont icon-love"></i> <a href="mailto:soldier_wyyx@163.com"><span>联系我</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Hibernate和MyBatis的区别&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?28d1b3a306f2b9f13ed66ffd0d5a0a9a";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+    <!-- Tencent Analytics -->
+    <script defer>
+      var _mtac = {};
+      (function () {
+        var mta = document.createElement("script");
+        mta.src = "//pingjs.qq.com/h5/stats.js?v2.0.4";
+        mta.setAttribute("name", "MTAH5");
+        mta.setAttribute("sid", "500732630");
+        
+        mta.setAttribute("cid", "500732632");
+        
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(mta, s);
+      })();
+    </script>
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/20973747.js"></script>
+  
+
+  
+
+
+
+
+
+</body>
+</html>

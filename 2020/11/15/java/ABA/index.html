@@ -1,0 +1,641 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/resource/img/favicon.png">
+  <link rel="icon" type="image/png" href="/resource/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="soldier">
+  <meta name="keywords" content="">
+  <title>原子类AtomicInteger的ABA问题谈谈？原子更新引用知道吗？ - 黄结的个人博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>soldier</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/about/">
+                    
+                    个人简历
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://soldiergit.github.io/honor/">
+                    
+                    项目及获奖
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-15 11:09" pubdate>
+        2020年11月15日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      809 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      12
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">原子类AtomicInteger的ABA问题谈谈？原子更新引用知道吗？</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <p>CAS —&gt; UnSafe —&gt; CAS底层思想 —&gt; ABA —&gt; 原子引用更新 —&gt; 如何规避ABA问题</p>
+<h2 id="1-ABA问题是怎么产生的"><a href="#1-ABA问题是怎么产生的" class="headerlink" title="1.ABA问题是怎么产生的"></a>1.ABA问题是怎么产生的</h2><p>CAS会导致“ABA”。<strong>狸猫换太子</strong><br><img src="/resource/img/java/ABA.jpeg" srcset="/img/loading.gif"><br>CAS算法实现一个重要前提需要提取出内存中某时刻的数据并在当下时刻比较并替换，那么在这个时间差内会导致数据的变化。<br>比如说一个线程t1从内存地址V中取出A，这时候另一个线程t2也从内存中取出A，并且线程t2进行了一些操作将值变成了B，然后线程t2又将V位置的数据变成A，这时候线程t1进行CAS操作发现内存中仍然是A，然后线程t1操作成功。<br><font color=#FF000>尽管线程t1的CAS操作成功，但是并不代表这个过程就是没有问题的。</font></p>
+<h2 id="2-原子引用"><a href="#2-原子引用" class="headerlink" title="2.原子引用"></a>2.原子引用</h2><p>解决ABA问题的方法：<strong>理解原子引用</strong> + 新增一种机制，那就是修改版本号（类似于时间戳）<br>原子引用：<strong>AtomicReference</strong>类</p>
+<pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>&#123;
+    String userName;
+    <span class="hljs-keyword">int</span> age;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">User</span><span class="hljs-params">(String userName, <span class="hljs-keyword">int</span> age)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>.userName = userName;
+        <span class="hljs-keyword">this</span>.age = age;
+    &#125;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;User&#123;&quot;</span> +
+                <span class="hljs-string">&quot;userName=&#x27;&quot;</span> + userName + <span class="hljs-string">&#x27;\&#x27;&#x27;</span> +
+                <span class="hljs-string">&quot;, age=&quot;</span> + age +
+                <span class="hljs-string">&#x27;&#125;&#x27;</span>;
+    &#125;
+&#125;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AtomicReferenceDemo</span> </span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+
+        User z3 = <span class="hljs-keyword">new</span> User(<span class="hljs-string">&quot;zhangsan&quot;</span>, <span class="hljs-number">20</span>);
+        User l4 = <span class="hljs-keyword">new</span> User(<span class="hljs-string">&quot;lisi&quot;</span>, <span class="hljs-number">22</span>);
+
+        AtomicReference&lt;User&gt; atomicReference = <span class="hljs-keyword">new</span> AtomicReference&lt;&gt;();
+        atomicReference.set(z3);
+
+        <span class="hljs-comment">// 如果当前值等于z3，那么替换为l4</span>
+        System.out.println(atomicReference.compareAndSet(z3, l4) + <span class="hljs-string">&quot;\t&quot;</span> + atomicReference.get().toString());
+        System.out.println(atomicReference.compareAndSet(z3, l4) + <span class="hljs-string">&quot;\t&quot;</span> + atomicReference.get().toString());
+    &#125;
+&#125;</code></pre>
+
+<h2 id="3-时间戳的原子引用"><a href="#3-时间戳的原子引用" class="headerlink" title="3.时间戳的原子引用"></a>3.时间戳的原子引用</h2><p>ABA问题的解决办法：<strong>AtomicStampedReference类</strong></p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ABADemo</span> </span>&#123;
+
+    <span class="hljs-keyword">static</span> AtomicReference&lt;Integer&gt; atomicReference = <span class="hljs-keyword">new</span> AtomicReference&lt;&gt;(<span class="hljs-number">100</span>);
+    <span class="hljs-keyword">static</span> AtomicStampedReference&lt;Integer&gt; atomicStampedReference = <span class="hljs-keyword">new</span> AtomicStampedReference&lt;&gt;(<span class="hljs-number">100</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// 初始值和初始版本号</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+        System.out.println(<span class="hljs-string">&quot;============================以下是ABA问题的产生=============================&quot;</span>);
+        <span class="hljs-keyword">new</span> Thread(() -&gt; &#123;
+            <span class="hljs-comment">// 如果值等于expect，那么修改为update</span>
+            atomicReference.compareAndSet(<span class="hljs-number">100</span>, <span class="hljs-number">101</span>);
+            atomicReference.compareAndSet(<span class="hljs-number">101</span>, <span class="hljs-number">100</span>);
+        &#125;, <span class="hljs-string">&quot;t1&quot;</span>).start();
+
+        <span class="hljs-keyword">new</span> Thread(() -&gt; &#123;
+            <span class="hljs-comment">// 暂停t2线程1秒钟，保证上面的t1线程完成一次ABA操作</span>
+            <span class="hljs-keyword">try</span> &#123; TimeUnit.SECONDS.sleep(<span class="hljs-number">1</span>); &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123; e.printStackTrace(); &#125;
+            System.out.println(atomicReference.compareAndSet(<span class="hljs-number">100</span>, <span class="hljs-number">2019</span>) + <span class="hljs-string">&quot;\t&quot;</span> + atomicReference.get());
+        &#125;, <span class="hljs-string">&quot;t2&quot;</span>).start();
+
+        System.out.println(<span class="hljs-string">&quot;============================以下是ABA问题的解决=============================&quot;</span>);
+
+        <span class="hljs-keyword">new</span> Thread(() -&gt; &#123;
+            System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;\t第1次版本号：&quot;</span> + atomicStampedReference.getStamp());
+            <span class="hljs-comment">// 暂停1秒t3线程</span>
+            <span class="hljs-keyword">try</span> &#123; TimeUnit.SECONDS.sleep(<span class="hljs-number">1</span>); &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123; e.printStackTrace(); &#125;
+            atomicStampedReference.compareAndSet(<span class="hljs-number">100</span>, <span class="hljs-number">101</span>, atomicStampedReference.getStamp(), atomicStampedReference.getStamp()+<span class="hljs-number">1</span>);
+            System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;\t第2次版本号：&quot;</span> + atomicStampedReference.getStamp());
+            atomicStampedReference.compareAndSet(<span class="hljs-number">101</span>, <span class="hljs-number">100</span>, atomicStampedReference.getStamp(), atomicStampedReference.getStamp()+<span class="hljs-number">1</span>);
+            System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;\t第3次版本号：&quot;</span> + atomicStampedReference.getStamp());
+        &#125;, <span class="hljs-string">&quot;t3&quot;</span>).start();
+
+
+        <span class="hljs-keyword">new</span> Thread(() -&gt; &#123;
+            <span class="hljs-keyword">int</span> stamp = atomicStampedReference.getStamp();
+            System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;\t第1次版本号：&quot;</span> + stamp);
+            <span class="hljs-comment">// 暂停3秒t4线程，保证上面的t3线程完成一次ABA操作</span>
+            <span class="hljs-keyword">try</span> &#123; TimeUnit.SECONDS.sleep(<span class="hljs-number">3</span>); &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123; e.printStackTrace(); &#125;
+            <span class="hljs-keyword">boolean</span> result = atomicStampedReference.compareAndSet(<span class="hljs-number">100</span>, <span class="hljs-number">2019</span>, stamp, stamp+<span class="hljs-number">1</span>);
+            System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;\t是否修改成功：&quot;</span> + result + <span class="hljs-string">&quot;\t当前最新实际版本号：&quot;</span> + atomicStampedReference.getStamp());
+            System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;\t当前最新值：&quot;</span> + atomicStampedReference.getReference());
+        &#125;, <span class="hljs-string">&quot;t4&quot;</span>).start();
+    &#125;
+&#125;</code></pre>
+<p>线程t1、t2对AtomicReference类的操作，最终compareAndSet的结果为true<br>线程t3、t4对AtomicStampedReference类的操作，最终compareAndSet的结果为false</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Java%E9%9D%A2%E8%AF%95%E9%A2%98/">Java面试题</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ABA/">ABA</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%B9%90%E8%A7%82%E9%94%81/">乐观锁</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/16/java/ArrayList/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ArrayList是线程不安全，请编码写一个不安全的案例并给出解决方案。</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/10/java/CAS/">
+                        <span class="hidden-mobile">CAS你知道吗？</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://soldiergit.github.io/" target="_blank" rel="nofollow noopener"><span>Copyright © 2020 soldier Powered by Hexo Fluid Core on Kubernetes</span></a> <i class="iconfont icon-love"></i> <a href="mailto:soldier_wyyx@163.com"><span>联系我</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "原子类AtomicInteger的ABA问题谈谈？原子更新引用知道吗？&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?28d1b3a306f2b9f13ed66ffd0d5a0a9a";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+    <!-- Tencent Analytics -->
+    <script defer>
+      var _mtac = {};
+      (function () {
+        var mta = document.createElement("script");
+        mta.src = "//pingjs.qq.com/h5/stats.js?v2.0.4";
+        mta.setAttribute("name", "MTAH5");
+        mta.setAttribute("sid", "500732630");
+        
+        mta.setAttribute("cid", "500732632");
+        
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(mta, s);
+      })();
+    </script>
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/20973747.js"></script>
+  
+
+  
+
+
+
+
+
+</body>
+</html>

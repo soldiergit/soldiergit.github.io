@@ -1,0 +1,663 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/resource/img/favicon.png">
+  <link rel="icon" type="image/png" href="/resource/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="soldier">
+  <meta name="keywords" content="">
+  <title>Vue框架面试总结 - 黄结的个人博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>soldier</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/about/">
+                    
+                    个人简历
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://soldiergit.github.io/honor/">
+                    
+                    项目及获奖
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-25 15:49" pubdate>
+        2020年11月25日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      20
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">Vue框架面试总结</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h2 id="vuex的作用？"><a href="#vuex的作用？" class="headerlink" title="vuex的作用？"></a>vuex的作用？</h2><p>vuex 是一个专门为 vue.js 应用程序开发的状态管理模式，可以帮助我们管理共享状态，也就是<code>管理全局变量</code>。</p>
+<p>vuex 使用一个 store 对象管理应用的状态，一个 store包括：state、getter、mutation、action、modules 五个属性</p>
+<ul>
+<li><strong>state</strong>：意为‘状态’，是 vuex 状态管理的数据源；</li>
+<li><strong>getter</strong>：作用与 filters 有一些相似，可以将 state 进行过滤后输出；</li>
+<li><strong>mutation</strong>：是 vuex 中改变state 的唯一途径，并且只能同步操作；</li>
+<li><strong>action</strong>：一些对 state 的异步操作可以放在 action 中，并通过在 action 中提交 mutation 变更状态；</li>
+<li><strong>modules</strong>：模块化vuex，可以让每一个模块拥有自己的 state、mutation、action、getters，使得结构非常清晰，方便管理。</li>
+</ul>
+<p>我们可以在组件中触发 action，action 则会提交 mutation，mutation 会对 state 进行修改，组件再根据 state、getter 渲染页面。</p>
+<h2 id="vue-中路由拦截器的作用？"><a href="#vue-中路由拦截器的作用？" class="headerlink" title="vue 中路由拦截器的作用？"></a>vue 中路由拦截器的作用？</h2><p>作用是：路由拦截、权限设置。</p>
+<p>例如：当用户没有登录或后台 token 失效时就会跳转到登录页面，用到的字段<code>requireAuth:true</code>。</p>
+<pre><code class="hljs vue">router.beforeEach((to,from,next)&#x3D;&gt;&#123;
+    if(to.path&#x3D;&#x3D;&#39;&#x2F;login&#39; || localStorage.getItem(&#39;token&#39;))&#123;
+        next();
+    &#125;else&#123;
+        alert(&#39;请重新登录&#39;);
+        next(&#39;&#x2F;login&#39;);
+    &#125;
+&#125;)</code></pre>
+
+<h2 id="axios-的作用？"><a href="#axios-的作用？" class="headerlink" title="axios 的作用？"></a>axios 的作用？</h2><p><code>axios</code>：是由 promise 封装的一个 http 的库，相当于 vue 中的 ajax，用于向后台发送请求。特点是：</p>
+<ul>
+<li>从浏览器中创建 XMLHttpRequests；</li>
+<li>从 node.js 中创建 http 请求；</li>
+<li>支持 Promise API；</li>
+<li>拦截请求和响应；</li>
+<li>转换请求数据和响应数据；</li>
+<li>取消请求；</li>
+<li>自动转换 json 数据；</li>
+<li>客户端支持防御 XSRF 攻击。</li>
+</ul>
+<p><code>Promise</code>： 是异步编程的一种解决方案，比传统的解决方案（回调函数和事件）更合理和更强大。它由社区最早提出和实现，ES6将其写进了语言标准，统一了语法，原生提供了 Promise。<br>Promise 的本质是分离异步数据获取和业务。</p>
+<p>我们可以使用 Promise 配合 axios 实现拦截器：</p>
+<ol>
+<li>请求拦截器<pre><code class="hljs vuejs">axios.interceptors.request.use(function(config)&#123;
+    return config;
+&#125;,function(error)&#123;
+    return Promise.reject(error);
+&#125;);</code></pre></li>
+<li>响应拦截器<pre><code class="hljs vuejs">axios.interceptors.response.use(function(response)&#123;
+    return response;
+&#125;,function(error)&#123;
+    return Promise.reject(error);
+&#125;);</code></pre>
+
+</li>
+</ol>
+<h2 id="列举-vue-的常见指令"><a href="#列举-vue-的常见指令" class="headerlink" title="列举 vue 的常见指令"></a>列举 vue 的常见指令</h2><ol>
+<li><code>&#123;&#123;&#125;&#125;</code>：文本插值<pre><code class="hljs vue">&lt;div id&#x3D;&quot;app&quot;&gt;
+    &#123;&#123;message&#125;&#125;
+&lt;&#x2F;div&gt;</code></pre></li>
+<li><code>v-bind</code>：DOM 属性绑定<pre><code class="hljs vue">&lt;div id&#x3D;&quot;app&quot;&gt;
+    &lt;span v-bind:title&#x3D;&#39;message&#39;&gt;
+        鼠标悬停几秒钟查看此处动态绑定的提示信息
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;div&gt;</code></pre></li>
+<li><code>v-on</code>：绑定一个事件监听器<pre><code class="hljs vue">&lt;div id&#x3D;&quot;app&quot;&gt;
+    &lt;button v-on:click&#x3D;&#39;deleteHandler&#39;&gt;删除&lt;&#x2F;button&gt;
+&lt;&#x2F;div&gt;</code></pre></li>
+<li><code>v-model</code>：实现表单输入和应用状态的双向数据绑定<pre><code class="hljs vue">&lt;div id&#x3D;&quot;app&quot;&gt;
+    &lt;p&gt;&#123;&#123;message&#125;&#125;&lt;&#x2F;p&gt;
+    &lt;input v-model&#x3D;&#39;message&#39;&gt;
+&lt;&#x2F;div&gt;</code></pre></li>
+<li><code> v-if 和 v-else</code>：控制元素的显示，动态的向DOM树内添加或者删除DOM元素（条件不成立时不会出现代码）<pre><code class="hljs vue">&lt;div id&#x3D;&quot;app&quot;&gt;
+    &lt;p v-if&#x3D;&#39;isStudent&#39;&gt;我是学生&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;</code></pre></li>
+<li><code>v-show</code>：控制元素的显示，本质就是通过设置 css 中的 display 设置为 none，控制隐藏（条件不成立时会出现代码）<pre><code class="hljs vue">&lt;div id&#x3D;&quot;app&quot;&gt;
+    &lt;p v-show&#x3D;&#39;isStudent&#39;&gt;我是学生&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;</code></pre></li>
+<li><code>v-for</code>：列表渲染<pre><code class="hljs vue">&lt;div id&#x3D;&quot;app&quot;&gt;
+    &lt;template v-for&#x3D;&quot;stu in studentList&quot;&gt;
+        &lt;span v-text&#x3D;&quot;stu.name&quot;&gt;&lt;&#x2F;span&gt;
+    &lt;&#x2F;template&gt;
+&lt;&#x2F;div&gt;</code></pre>
+
+</li>
+</ol>
+<h2 id="对于-MVVM-的理解"><a href="#对于-MVVM-的理解" class="headerlink" title="对于 MVVM 的理解"></a>对于 MVVM 的理解</h2><p>Vue 是一个基于 MVVM（Model-View-ViewModel）模式实现的轻量级的渐进式前端框架，它提供了一种帮助开发者快速构建并开发前端项目的新的思维模式。</p>
+<ul>
+<li><strong>Model</strong>：代表数据模型，也可以在 Model 中定于数据修改和操作的业务逻辑；</li>
+<li><strong>View</strong>：代表 UI 组件，它负责将数据模型转化为 UI 展示出来；</li>
+<li><strong>ViewModel</strong>：监听模型数据的改变和控制视图行为、处理用户交互，简单理解就是一个同步 View 和 Model 的对象，连接 Model 和 View。</li>
+</ul>
+<p>ViewModel 和 Model 实现双向数据绑定。</p>
+<h2 id="Vue的生命周期"><a href="#Vue的生命周期" class="headerlink" title="Vue的生命周期"></a>Vue的生命周期</h2><ol>
+<li>什么是 Vue 的生命周期？<br><code>答：</code>Vue 实例从创建到销毁的过程，就是生命周期。从开始创建、编译模板、挂载DOM &rarr; 渲染、更新 &rarr; 渲染、销毁等一系列过程，称之为 Vue 的生命周期。</li>
+<li>Vue 生命周期的作用是什么？<br><code>答：</code>它的生命周期中有多个事件钩子，让我们在控制整个 Vue 实例的过程时更容易形成好的逻辑。</li>
+<li>Vue 生命周期总共有几个阶段？<br><code>答：</code>它可以总共分为8个阶段：创建前、后 &rarr; 转入前、后 &rarr; 更新前、后 &rarr; 销毁前、后。</li>
+<li>第一次页面加载会触发哪几个钩子？<br><code>答：</code>会触发beforeCreate、created、beforeMount、mounted。</li>
+<li>DOM 渲染在哪个周期中就已经完成？<br><code>答：</code>DOM 渲染在 mounted 中就已经完成了。</li>
+</ol>
+<h2 id="Vue-实现数据双向绑定的原理是什么？"><a href="#Vue-实现数据双向绑定的原理是什么？" class="headerlink" title="Vue 实现数据双向绑定的原理是什么？"></a>Vue 实现数据双向绑定的原理是什么？</h2><p><code>答：</code>Object.defineProperty（）。采用数据劫持结合发布者-订阅者模式的方式，通过Object.defineProperty（）来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应监听回调。</p>
+<h2 id="Vue-组件间的参数传递"><a href="#Vue-组件间的参数传递" class="headerlink" title="Vue 组件间的参数传递"></a>Vue 组件间的参数传递</h2><ol>
+<li>父组件与子组件传值<br> 1.1 父组件传给子组件：子组件通过 <code>props 方法</code>接受数据;<br> 1.2 子组件传给父组件：<code>$emit 方法</code>传递参数</li>
+<li>非父子组件间的数据传递，兄弟组件传值<br>eventBus，就是创建一个事件中心，相当于中转站，可以用它来传递事件和接收事件。项目比较小时，用这个比较合适。（虽然也有不少人推荐直接用VUEX，具体来说看需求咯。技术只是手段，目的达到才是王道。）</li>
+</ol>
+<h2 id="怎么定义-vue-router-的动态路由-怎么获取传过来的值"><a href="#怎么定义-vue-router-的动态路由-怎么获取传过来的值" class="headerlink" title="怎么定义 vue-router 的动态路由? 怎么获取传过来的值"></a>怎么定义 vue-router 的动态路由? 怎么获取传过来的值</h2><p>在 router 目录下的 index.js 文件中，对 path 属性加上 /:id，使用 router 对象的 params.id 获取。</p>
+<h2 id="vue常用的修饰符？"><a href="#vue常用的修饰符？" class="headerlink" title="vue常用的修饰符？"></a>vue常用的修饰符？</h2><ul>
+<li>.prevent: 提交事件不再重载页面；</li>
+<li>.stop: 阻止单击事件冒泡；</li>
+<li>.self: 当事件发生在该元素本身而不是子元素的时候会触发；</li>
+<li>.capture: 事件侦听，事件发生的时候会调用</li>
+</ul>
+<h2 id="vue-js的两个核心是什么？"><a href="#vue-js的两个核心是什么？" class="headerlink" title="vue.js的两个核心是什么？"></a>vue.js的两个核心是什么？</h2><p>数据驱动、组件系统</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Java%E9%9D%A2%E8%AF%95%E9%A2%98/">Java面试题</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Vue%EF%BC%8C-%E6%A1%86%E6%9E%B6/">Vue， 框架</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/27/java/Hibernate_MyBatis/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hibernate和MyBatis的区别</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/24/java/Sort/">
+                        <span class="hidden-mobile">排序算法学习笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://soldiergit.github.io/" target="_blank" rel="nofollow noopener"><span>Copyright © 2020 soldier Powered by Hexo Fluid Core on Kubernetes</span></a> <i class="iconfont icon-love"></i> <a href="mailto:soldier_wyyx@163.com"><span>联系我</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Vue框架面试总结&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?28d1b3a306f2b9f13ed66ffd0d5a0a9a";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+    <!-- Tencent Analytics -->
+    <script defer>
+      var _mtac = {};
+      (function () {
+        var mta = document.createElement("script");
+        mta.src = "//pingjs.qq.com/h5/stats.js?v2.0.4";
+        mta.setAttribute("name", "MTAH5");
+        mta.setAttribute("sid", "500732630");
+        
+        mta.setAttribute("cid", "500732632");
+        
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(mta, s);
+      })();
+    </script>
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/20973747.js"></script>
+  
+
+  
+
+
+
+
+
+</body>
+</html>

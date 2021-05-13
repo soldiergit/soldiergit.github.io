@@ -1,0 +1,724 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/resource/img/favicon.png">
+  <link rel="icon" type="image/png" href="/resource/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="soldier">
+  <meta name="keywords" content="">
+  <title>HTTP学习笔记 - 黄结的个人博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>soldier</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/about/">
+                    
+                    个人简历
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://soldiergit.github.io/honor/">
+                    
+                    项目及获奖
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-17 09:28" pubdate>
+        2020年11月17日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      25
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">HTTP学习笔记</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h2 id="一、HTTP方法"><a href="#一、HTTP方法" class="headerlink" title="一、HTTP方法"></a>一、HTTP方法</h2><p>客户端发送的<strong>请求报文</strong>第一行为请求行，包含了方法字段。如<strong>GET请求</strong>：</p>
+<pre><code class="hljs html">GET http://www.example.com/ HTTP/1.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+Cache-Control: max-age=0
+Host: www.example.com
+If-Modified-Since: Thu, 17 Oct 2019 07:18:26 GMT
+If-None-Match: &quot;3147526947+gzip&quot;
+Proxy-Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 xxx
+
+param1=1&amp;param2=2</code></pre>
+
+<h3 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h3><blockquote>
+<p>获取资源</p>
+</blockquote>
+<p>现在大多数网络请求中，绝大部分使用的是GET方法。</p>
+<h3 id="HEAD"><a href="#HEAD" class="headerlink" title="HEAD"></a>HEAD</h3><blockquote>
+<p>获取报文首部</p>
+</blockquote>
+<p>与GET方法类型，但不会返回报文主体部分。主要用于确认URL的有效性以及资源更新的日期时间等。</p>
+<h3 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h3><blockquote>
+<p>传输实体主体</p>
+</blockquote>
+<p>POST主要同于传输数据，而GET主要用来回去资源。</p>
+<h3 id="PUT"><a href="#PUT" class="headerlink" title="PUT"></a><del>PUT</del></h3><blockquote>
+<p>上传文件</p>
+</blockquote>
+<p>由于自身不带验证机制，任何人都可以上传文件，因此存在安全性问题，一般不使用该方法。</p>
+<h3 id="PATCH"><a href="#PATCH" class="headerlink" title="PATCH"></a>PATCH</h3><blockquote>
+<p>对资源进行部分修改</p>
+</blockquote>
+<p>PUT也可以用于修改资源，但是只能完全替换原始资源；PATCH允许部分修改。</p>
+<h3 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h3><blockquote>
+<p>删除文件</p>
+</blockquote>
+<p>与PUT功能相反，并且同样不带验证机制。</p>
+<h3 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h3><blockquote>
+<p>查询支持的方法</p>
+</blockquote>
+<p>查询指定的URL能够支持的方法。会返回 <code>Allow：GET，POST，HEAD，OPTIONS</code> 这样的内容。</p>
+<h3 id="CONNECT"><a href="#CONNECT" class="headerlink" title="CONNECT"></a>CONNECT</h3><blockquote>
+<p>要求在与代理服务器通信是建立隧道</p>
+</blockquote>
+<p>使用<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/ssl">SSL</a>和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/TLS">TLS</a>协议把通信内容加密后经网络隧道传输。</p>
+<h3 id="TRACE"><a href="#TRACE" class="headerlink" title="TRACE"></a><del>TRACE</del></h3><blockquote>
+<p>追踪路径</p>
+</blockquote>
+<p>服务器会将通信路径返回给客户端。通常不会使用 TRACE，并且它容易受到 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/61990354">XST 攻击（Cross-Site Tracing，跨站追踪）</a>。</p>
+<h2 id="二、HTTP状态码"><a href="#二、HTTP状态码" class="headerlink" title="二、HTTP状态码"></a>二、HTTP状态码</h2><p>服务器返回的<strong>响应报文</strong>中第一行为状态行，包含了状态码以及原因短语，用来告知客户端请求的结果。</p>
+<table>
+<thead>
+<tr>
+<th align="center">状态码</th>
+<th align="center">类别</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1XX</td>
+<td align="center">Informational（信息性状态码）</td>
+<td align="center">接收的请求正在处理</td>
+</tr>
+<tr>
+<td align="center">2XX</td>
+<td align="center">Success（成功状态码）</td>
+<td align="center">请求正常处理完毕</td>
+</tr>
+<tr>
+<td align="center">3XX</td>
+<td align="center">Redirection（重定向状态码）</td>
+<td align="center">需要进行附加操作以完成请求</td>
+</tr>
+<tr>
+<td align="center">4XX</td>
+<td align="center">Client Error（客户端错误状态码）</td>
+<td align="center">客户端无法处理请求</td>
+</tr>
+<tr>
+<td align="center">5XX</td>
+<td align="center">Server Error（服务器错误状态码）</td>
+<td align="center">服务器处理请求出错</td>
+</tr>
+</tbody></table>
+<h3 id="1XX-信息"><a href="#1XX-信息" class="headerlink" title="1XX 信息"></a>1XX 信息</h3><ul>
+<li><strong>100 Continue</strong>：表明到目前为止都很正常，客户端可以继续发送请求或者忽略这个响应。</li>
+</ul>
+<h3 id="2XX-成功"><a href="#2XX-成功" class="headerlink" title="2XX 成功"></a>2XX 成功</h3><ul>
+<li><strong>200 OK</strong></li>
+<li><strong>204 No Content</strong>：请求已经成功处理，但是返回的响应保卫不包含实体的主体部分。一般只需要从客户端往服务器发送信息，而不需要返回数据时使用。</li>
+<li><strong>206 Partial Content</strong>：表示客户端进行了范围请求，响应报文包含有Content-Range指定范围的实体内容。</li>
+</ul>
+<h3 id="3XX-重定向"><a href="#3XX-重定向" class="headerlink" title="3XX 重定向"></a>3XX 重定向</h3><ul>
+<li><strong>301 Moved Permanently</strong>：永久性重定向</li>
+<li><strong>302 Found</strong>：临时性重定向</li>
+<li><strong>303 See Other</strong>：和302有着相同的功能，但是303明确要求客户端应该采用GET方法获取资源。</li>
+<li><strong>304 Not Modified</strong>：如果请求报文首部包含一些条件，例如：If-Match，If-Modified-Since，If-None-Match，If-Range，If-Unmodified-Since，如果不满足条件，则服务器会返回304状态码。</li>
+<li><strong>307 Temporary Redirect</strong>：临时重定向，与302的含义类似，但是307要求浏览器不会把重定向请求的POST方法改为GET方法。</li>
+</ul>
+<h3 id="4XX-客户端错误"><a href="#4XX-客户端错误" class="headerlink" title="4XX 客户端错误"></a>4XX 客户端错误</h3><ul>
+<li><strong>400 Bad Request</strong>：请求报文中存在语法错误。</li>
+<li><strong>401 Unauthorized</strong>：该状态码表示发送的请求需要有认证信息（BASIC认证、DIGEST认证）。如果之前已进行过一次请求，则表示用户认证失败。</li>
+<li><strong>403 Forbidden</strong>：请求被拒绝。</li>
+<li><strong>404 Not Found</strong>：找不到页面。</li>
+</ul>
+<h3 id="5XX-服务器错误"><a href="#5XX-服务器错误" class="headerlink" title="5XX 服务器错误"></a>5XX 服务器错误</h3><ul>
+<li><strong>500 Internal Server Error</strong>：服务器正在执行请求时发生错误。</li>
+<li><strong>503 Service Unavailable</strong>：服务器暂时处于超负载或正在停机维护，现在无法处理请求。</li>
+</ul>
+<h2 id="三、HTTPS"><a href="#三、HTTPS" class="headerlink" title="三、HTTPS"></a>三、HTTPS</h2><p>HTTP有以下安全性问题：</p>
+<ol>
+<li>使用明文进行通信，内容可能会被窃听；</li>
+<li>不验证通信方的身份，通信方的身份有可能遭遇伪装；</li>
+<li>无法证明报文的完整性，报文有可能遭篡改。</li>
+</ol>
+<p><font color=#FF000>HTTPS并不是新协议</font>，而是让HTTP先和SSL通信，再由SSL和TCP通信，也就是说HTTPS使用了隧道进行通信。<br>通过使用SSL，HTTPS具备了以下<strong>特点</strong>：</p>
+<ul>
+<li>加密（防窃听）</li>
+<li>认证（防伪装）</li>
+<li>完整性保护（防篡改）</li>
+</ul>
+<h3 id="HTTPS的加密算法"><a href="#HTTPS的加密算法" class="headerlink" title="HTTPS的加密算法"></a>HTTPS的加密算法</h3><h4 id="1-对称加密"><a href="#1-对称加密" class="headerlink" title="1.对称加密"></a>1.对称加密</h4><p>加密和解密使用同一密钥。</p>
+<ul>
+<li><strong>优点</strong>：运算速度快；</li>
+<li><strong>缺点</strong>：无法安全地将密钥传输给通信方。<br><img src="/resource/img/java/SymmetricEncryption.png" srcset="/img/loading.gif"></li>
+</ul>
+<h4 id="2-非对称加密"><a href="#2-非对称加密" class="headerlink" title="2.非对称加密"></a>2.非对称加密</h4><p>又称为公开密钥加密，加密和解密使用不同的密钥。<br>公开密钥所有人都可以获取，通信发送方获得接收方的公开密钥后，就可以使用公开密钥进行加密，接收方收到通信内容后使用私钥解密。</p>
+<ul>
+<li><strong>优点</strong>：可以更安全地将公开密钥传输给通信发送方；</li>
+<li><strong>缺点</strong>：运算速度慢。<br><img src="/resource/img/java/PublicKeyEncryption.png" srcset="/img/loading.gif"></li>
+</ul>
+<h4 id="3-HTTPS采用的加密方式"><a href="#3-HTTPS采用的加密方式" class="headerlink" title="3.HTTPS采用的加密方式"></a>3.HTTPS采用的加密方式</h4><p>上面提到的<strong>对称加密</strong>方式的传输效率更高，但是无法安全地将密钥Secret Key传输给通信方。而<strong>非对称加密</strong>方式可以保证传输的安全性，因此我们可以利用非对称加密方式将Secret Key传输给通信方。HTTPS采用混合的加密机制，正是利用了上面提到的方案：</p>
+<ul>
+<li>使用<strong>非对称加密</strong>方式，传输<strong>对称加密</strong>方式所需要的Secret Key，从而保证安全性；</li>
+<li>获取到Secret Key后，再使用<strong>对称加密</strong>方式进行通信，从而保证效率。</li>
+</ul>
+<h3 id="HTTPS的缺点"><a href="#HTTPS的缺点" class="headerlink" title="HTTPS的缺点"></a>HTTPS的缺点</h3><ul>
+<li>因为需要进行加密解密等过程，所以速度会更慢；</li>
+<li>需要支付证书授权的高额费用。</li>
+</ul>
+<h2 id="四、网络传输层协议"><a href="#四、网络传输层协议" class="headerlink" title="四、网络传输层协议"></a>四、网络传输层协议</h2><h3 id="UDP和TCP的特点"><a href="#UDP和TCP的特点" class="headerlink" title="UDP和TCP的特点"></a>UDP和TCP的特点</h3><ul>
+<li><strong>用户数据报协议 UDP</strong>：是无连接的，尽最大可能交付，没有拥塞控制，<font color=#FF000>面向报文</font>，支持一对一、一对多、多对一、多对多的交互通信。<br><img src="/resource/img/java/UDP.jpg" srcset="/img/loading.gif"></li>
+<li><strong>传输控制协议 TCP</strong>：是面向连接的，提供可靠交付，有流量控制、拥塞控制，提供全双工通信，<font color=#FF000>面向字节流</font>，只能一对一。<br><img src="/resource/img/java/TCP.png" srcset="/img/loading.gif"></li>
+</ul>
+<h3 id="TCP的三次握手"><a href="#TCP的三次握手" class="headerlink" title="TCP的三次握手"></a>TCP的三次握手</h3><p>假设A为客户端，B为服务器端。</p>
+<ul>
+<li>首先B处于LISTEN（监听）状态，等待客户端的连接请求；</li>
+<li>A想B发送连接请求报文：同步SYN=1、确认ACK=0、选择一个初始序号X；</li>
+<li>B收到连接请求报文后，若同意，则向A发送连接确认报文：同步SYN=1、确认ACK=1、确认号为X+1、选择一个初始序号Y；</li>
+<li>A收的B的连接确认后，还要向B发出确认：确认号为Y+1、序号为X+1；</li>
+<li>B收到A的确认后，连接建立。</li>
+</ul>
+<h4 id="TCP三次握手的原因"><a href="#TCP三次握手的原因" class="headerlink" title="TCP三次握手的原因"></a>TCP三次握手的原因</h4><p>第三次握手是为了防止失效的连接请求到达服务器，让服务器错误打开连接。</p>
+<h3 id="TCP的四次挥手"><a href="#TCP的四次挥手" class="headerlink" title="TCP的四次挥手"></a>TCP的四次挥手</h3><p>以下描述不讨论序号和确认号，因为序号和确认号的规则比较简单。并且不讨论ACK，因为确认ACK在连接建立之后都为1。</p>
+<ul>
+<li>A发送连接释放报文：终止FIN=1；</li>
+<li>B收到之后发出确认，此时TCP处于半关闭状态，B能向A发送数据但A不能向B发送数据；</li>
+<li>当B不再需要连接时，发出连接释放报文：终止FIN=1；</li>
+<li>A收到后发出确认，进入TIME-WAIT状态，等待2MSL（最大报文存活时间）后释放连接；</li>
+<li>B收到A的确认后释放连接。</li>
+</ul>
+<h4 id="TCP四次挥手的原因"><a href="#TCP四次挥手的原因" class="headerlink" title="TCP四次挥手的原因"></a>TCP四次挥手的原因</h4><p>客户端发送了FIN连接释放报文后，服务器收到了这个报文，就进入了CLOSE-WAIT状态。这个状态是为了让服务器端发送还未传送完毕的数据，传送完毕之后，服务器会发送FIN连接释放报文。</p>
+<h3 id="TCP的流量控制"><a href="#TCP的流量控制" class="headerlink" title="TCP的流量控制"></a>TCP的流量控制</h3><p>流量控制是为了控制发送方发送速率，保证接收方来得及接收。<br>接收方发送的确认报文中的窗口字段可以用来控制发送方窗口大小，从而影响发送方的发送效率。将窗口字段设为0，则发送方不能发送数据。</p>
+<h3 id="TCP的拥塞控制"><a href="#TCP的拥塞控制" class="headerlink" title="TCP的拥塞控制"></a>TCP的拥塞控制</h3><p>如果网络出现拥塞，分组将会丢失，此时发送方会继续重传，从而导致网络拥塞程度更高。因此当出现拥塞是，应当控制发送方的速率。这一点和流量控制很像，但是出发点不同。流量控制是为了让接收方能来得及接收，而拥塞控制是为了降低整个网络的拥塞程度。<br><font color=#FF000>TCP主要通过四个算法来进行拥塞控制</font>：慢开始、拥塞避免、快重传、快恢复。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
+                    
+                      <a class="hover-with-bg" href="/tags/HTTP/">HTTP</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/18/java/Spring/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Spring框架面试总结</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/16/java/Map/">
+                        <span class="hidden-mobile">聊聊Map集合？</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://soldiergit.github.io/" target="_blank" rel="nofollow noopener"><span>Copyright © 2020 soldier Powered by Hexo Fluid Core on Kubernetes</span></a> <i class="iconfont icon-love"></i> <a href="mailto:soldier_wyyx@163.com"><span>联系我</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "HTTP学习笔记&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?28d1b3a306f2b9f13ed66ffd0d5a0a9a";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+    <!-- Tencent Analytics -->
+    <script defer>
+      var _mtac = {};
+      (function () {
+        var mta = document.createElement("script");
+        mta.src = "//pingjs.qq.com/h5/stats.js?v2.0.4";
+        mta.setAttribute("name", "MTAH5");
+        mta.setAttribute("sid", "500732630");
+        
+        mta.setAttribute("cid", "500732632");
+        
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(mta, s);
+      })();
+    </script>
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/20973747.js"></script>
+  
+
+  
+
+
+
+
+
+</body>
+</html>

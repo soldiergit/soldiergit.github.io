@@ -1,0 +1,614 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/resource/img/favicon.png">
+  <link rel="icon" type="image/png" href="/resource/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="soldier">
+  <meta name="keywords" content="">
+  <title>聊聊Map集合？ - 黄结的个人博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>soldier</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/about/">
+                    
+                    个人简历
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://soldiergit.github.io/honor/">
+                    
+                    项目及获奖
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-16 11:59" pubdate>
+        2020年11月16日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      974 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      12
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">聊聊Map集合？</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <h2 id="1-HashMap简介"><a href="#1-HashMap简介" class="headerlink" title="1.HashMap简介"></a>1.HashMap简介</h2><p>举一反三，HashMap与ArrayList、HashSet都是线程不安全的。<font color=#FF000>JDK1.7用的是头插法（先扩容再插入）</font>，而<font color=#FF000>JDK1.8及之后使用的都是尾插法（先插入再扩容）</font>。因为JDK1.7是用单链表进行的纵向延伸，当采用头插法就是能够提高插入的效率，但是也会容易出现<font color=#FF000><strong>逆序且环形链表死循环问题</strong></font>。但是在JDK1.8之后是因为加入了红黑树使用尾插法，能够避免出现逆序且链表死循环的问题。<br><strong>JDK1.8及之后</strong>先插入，再判断是否有红黑树节点，再判断链表长度，当链表长度达到8是改为红黑树</p>
+<h2 id="2-为什么HashMap要转红黑树？"><a href="#2-为什么HashMap要转红黑树？" class="headerlink" title="2.为什么HashMap要转红黑树？"></a>2.为什么HashMap要转红黑树？</h2><p>HashMap会触发链表转红黑树的两个条件是：</p>
+<ol>
+<li>链表的长度达到8个</li>
+<li>数组的长度达到64个</li>
+</ol>
+<p>出现这种数据结构的转换，实际上就是：<font color=#FF000>空间和时间的权衡</font>。<br>（1）为了实现快速查找，HashMap 选择了数组而不是链表。以利用数组的索引实现 O(1) 复杂度的查找效率。<br>（2）为了利用索引查找，HashMap 引入 Hash 算法, 将 key 映射成数组下标: key -&gt; Index。<br>（3）引入 Hash 算法又导致了 Hash 冲突。为了解决 Hash 冲突，HashMap 采用链地址法，在冲突位置转为使用链表存储。<br>（4）链表存储过多的节点又导致了在链表上节点的查找性能的恶化。为了优化查找性能，HashMap 在链表长度超过 8 之后转而将链表转变成红黑树，以将 O(n) 复杂度的查找效率提升至 O(log n)。</p>
+<h2 id="3-HashMap线程不安全案例"><a href="#3-HashMap线程不安全案例" class="headerlink" title="3.HashMap线程不安全案例"></a>3.HashMap线程不安全案例</h2><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ContainerNotSafeDemo</span> </span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+        Map&lt;String, String&gt; map = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;&gt;();
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">3</span>; i++) &#123;
+            <span class="hljs-keyword">new</span> Thread(() -&gt; &#123;
+                map.put(Thread.currentThread().getName(), UUID.randomUUID().toString().substring(<span class="hljs-number">0</span> ,<span class="hljs-number">8</span>));
+                System.out.println(map);
+            &#125;, String.valueOf(i)).start();
+        &#125;
+    &#125;
+&#125;</code></pre>
+<p>当线程数量大一点，比如30时，会出现并发修改异常<strong>java.util.ConcurrentModificationException</strong></p>
+<h2 id="4-线程安全解决方案"><a href="#4-线程安全解决方案" class="headerlink" title="4.线程安全解决方案"></a>4.线程安全解决方案</h2><ol>
+<li>Hashtable<pre><code class="hljs java">Map&lt;String, String&gt; map = <span class="hljs-keyword">new</span> Hashtable&lt;&gt;()</code></pre>
+Hashtable跟HashMap的关系与Vector跟ArrayList的关系一样，都是在所有操作方法中加入synchronized修饰，粒度大，不推荐使用！</li>
+<li>使用JDK提供的Collections工具类<pre><code class="hljs java">Map&lt;String, String&gt; map = Collections.synchronizedMap(<span class="hljs-keyword">new</span> HashMap&lt;&gt;());</code></pre></li>
+<li>JUC下的ConcurrentHashMap<pre><code class="hljs java">Map&lt;String, String&gt; map = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;&gt;();</code></pre>
+<font color=#FF000><strong>重点</strong></font>：ConcurrentHashMap使用分段锁Segment，将数据分成一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问。<br>在计算map的size是是遍历所有Segment的size进行累加，先连续两次尝试不加锁的size是否一致，超过3次会给每个Segment加锁。（Segment分段锁继承自ReentrantLock重入锁）</li>
+</ol>
+<p><strong><em>JDK1.8抛弃Segment分段锁</em></strong>，利用CAS+Synchronized，数据结构采用：数组+链表+红黑树</p>
+<h2 id="5-map遍历的几种方式？"><a href="#5-map遍历的几种方式？" class="headerlink" title="5.map遍历的几种方式？"></a>5.map遍历的几种方式？</h2><ol>
+<li>keySet的for循环<pre><code class="hljs java"><span class="hljs-keyword">for</span>(String key : map.keySet())&#123;  
+    System.out.println(key + <span class="hljs-string">&quot;--&quot;</span> + map.get(key));  
+&#125;</code></pre></li>
+<li>keySet的iterator迭代器<pre><code class="hljs java">Iterator it=map.keySet().iterator();  
+<span class="hljs-keyword">while</span>(it.hasNext())&#123;  
+    String key = it.next().toString();   
+    String value = map.get(key);  
+    System.out.println(key + <span class="hljs-string">&quot;--&quot;</span> + value);  
+&#125;</code></pre></li>
+<li>entrySet的for循环<pre><code class="hljs java"><span class="hljs-keyword">for</span>(Map.Entry&lt;String, String&gt; entry : map.entrySet())&#123;  
+    System.out.println(entry.getKey() + <span class="hljs-string">&quot;--&quot;</span> + entry.getValue());  
+&#125;</code></pre></li>
+<li>entrySet的iterator迭代器<pre><code class="hljs java">Set set = map.entrySet();       
+Iterator i = set.iterator();       
+<span class="hljs-keyword">while</span>(i.hasNext())&#123;    
+    Map.Entry&lt;String, String&gt; entry = (Map.Entry&lt;String, String&gt;) i.next();  
+    System.out.println(entry.getKey() + <span class="hljs-string">&quot;==&quot;</span> + entry.getValue());  
+&#125;</code></pre></li>
+<li>java8还新增了forEach方式以及.stream().forEach</li>
+</ol>
+<p><strong>总结：</strong></p>
+<ul>
+<li>entrySet的方式整体都是比keySet方式要高一些；</li>
+<li>单纯的获取key来说，两者的差别并不大，但是如果要获取value，还是entrySet的效率会更好，因为keySet需要从map中再次根据key获取value，而entrySet一次都全部获取出来；</li>
+<li>iterator 迭代器方式比 foreach 的效率高。</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Java%E9%9D%A2%E8%AF%95%E9%A2%98/">Java面试题</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9B%86%E5%90%88%E7%B1%BB%E4%B8%8D%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/">集合类不安全问题</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Map/">Map</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/17/java/HTTP/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTTP学习笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/16/java/Set/">
+                        <span class="hidden-mobile">聊聊Set集合？</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://soldiergit.github.io/" target="_blank" rel="nofollow noopener"><span>Copyright © 2020 soldier Powered by Hexo Fluid Core on Kubernetes</span></a> <i class="iconfont icon-love"></i> <a href="mailto:soldier_wyyx@163.com"><span>联系我</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "聊聊Map集合？&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?28d1b3a306f2b9f13ed66ffd0d5a0a9a";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+    <!-- Tencent Analytics -->
+    <script defer>
+      var _mtac = {};
+      (function () {
+        var mta = document.createElement("script");
+        mta.src = "//pingjs.qq.com/h5/stats.js?v2.0.4";
+        mta.setAttribute("name", "MTAH5");
+        mta.setAttribute("sid", "500732630");
+        
+        mta.setAttribute("cid", "500732632");
+        
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(mta, s);
+      })();
+    </script>
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/20973747.js"></script>
+  
+
+  
+
+
+
+
+
+</body>
+</html>
