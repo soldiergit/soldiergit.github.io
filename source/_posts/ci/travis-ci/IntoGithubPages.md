@@ -287,8 +287,9 @@ date: 2021-05-12 16:05:00
         # 设置语言
         language: node_js
         
-        # 设置相应的版本
-        node_js: stable
+        # 设置相应的版本（必须12以上）
+        node_js: 
+          - 15
         
         cache:
           apt: true
