@@ -19,8 +19,10 @@ install:
 
 # 下拉代码后执行的操作
 script:
-  - hexo clean # 清除
-  - hexo g # 生成
+  # 同步语雀文章到本地
+  - yuque-hexo clean
+  - yuque-hexo sync
+  - hexo generate # 生成
 
 after_script:
   - cd ./public
