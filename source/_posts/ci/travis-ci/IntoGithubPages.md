@@ -39,22 +39,21 @@ date: 2021-05-12 16:05:00
       npm install -g npm
       ```
 
-      
-
-2. 安装 hexo
+2. 创建博客
 
    ```shell
+   # 全局安装hexo
    npm install hexo-cli -g
-   ```
-
-   创建一个`Github用户名.github.io`的文件夹，进入到这个文件夹下
-
-   ```shell
-   hexo init
+   # 创建项目
+   hexo init Github用户名.github.io
+   # 安装依赖
    npm install
+   # 安装主题（去Hexo官网选择自己喜欢的博客主题）
+   npm install --save hexo-theme-fluid
+   # 启动项目
+   npm run server
+   # 访问http://localhost:4000查看效果
    ```
-
-   
 
 ## 2.Github配置
 
@@ -63,30 +62,63 @@ date: 2021-05-12 16:05:00
 2. 创建Github访问令牌：[教程](https://www.cnblogs.com/soldier-cnblogs/p/13386848.html)
 
 3. 创建一个`resource`分支，将其设置为主分支
-   ![image-20210512153500126](C:\Users\dev\AppData\Roaming\Typora\typora-user-images\image-20210512153500126.png)
-
+   ![img](/resource/img/ci/T_GithubPages_1.png)
    
+4. ~~手动部署项目~~
+
+   1. 先提交一次到Github
+
+      ```shell
+      # 在项目根目录初始化
+      git init
+      # 设置远程仓库
+      git remote add origin https://github.com/soldiergit/soldiergit.github.io.git
+      # 添加
+      git add .
+      # 提交信息
+      git commit -m 'init commit'
+      # 提交项目(注意这个分支是源码分支，不是GithubPages页面分支-是master)
+      git push origin resource
+      ```
+
+   2. 配置` _config.yml`
+
+      ```yml
+      deploy:
+      - type: git
+      # 部署到的仓库
+        repo: https://github.com/soldiergit/soldiergit.github.io
+      # 部署到的分支(GithubPages页面分)
+        branch: master
+      ```
+
+   3. 部署
+
+      ```shell
+      # 项目根目录输入
+      hexo deploy
+      # 输入GitHub用户名密码即可完成部署
+      ```
 
 ## 3.Travis-ci配置
 
 1. 使用github账号授权登录 [Travis-ci官网](https://travis-ci.org/) ，点击Sign In
 2. 在官网build`用户名.github.io`项目
    点击这里的“+”号
-   ![](https://img2020.cnblogs.com/blog/1622529/202004/1622529-20200412154627421-1979272790.png)
+   ![img](/resource/img/ci/T_GithubPages_2.png)
    找到或搜索我们的项目
-   ![img](https://img2020.cnblogs.com/blog/1622529/202105/1622529-20210512154342364-1133638796.png)
+   ![img](/resource/img/ci/T_GithubPages_3.png)
    完成之后可以在首页见到该项目
-   ![img](https://img2020.cnblogs.com/blog/1622529/202105/1622529-20210512154713803-1412253504.png)
+   ![img](/resource/img/ci/T_GithubPages_4.png)
 3. 进入该项目，点击右侧的`More options`选择`Settings`
    在`Environment Variables`下 add 一个名为`Github_Token`的变量
-   ![img](https://img2020.cnblogs.com/blog/1622529/202105/1622529-20210512155348476-1110897466.png)
-
-
+   ![img](/resource/img/ci/T_GithubPages_5.png)
 
 4.提交代码到Github
 
 1. 在本地项目的根目录下新建一个`.travis.yml`文件
-   根据自己的实际情况修改：
+   <details>
+     <summary>点击展开</summary>
 
    ```yml
    # 设置语言
@@ -146,7 +178,11 @@ date: 2021-05-12 16:05:00
      on_success: change
      on_failure: always
    ```
+    </details>
 
-   ![img](https://img2020.cnblogs.com/blog/1622529/202105/1622529-20210512155733300-1805568823.png)
+   ![img](/resource/img/ci/T_GithubPages_6.png)
 
 2. 将所有代码提交到Github的`resource`上即可
+   ![img](/resource/img/ci/T_GithubPages_7.png)
+   ![img](/resource/img/ci/T_GithubPages_8.png)
+   ![img](/resource/img/ci/T_GithubPages_9.png)
