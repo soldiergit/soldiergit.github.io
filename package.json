@@ -14,18 +14,18 @@
     "version": "5.2.0"
   },
   "yuqueConfig": {
-  "postPath": "source/_posts/yuque",
-  "cachePath": "yuque.json",
-  "mdNameFormat": "slug",
-  "adapter": "hexo",
-  "concurrency": 5,
-  "baseUrl": "https://www.yuque.com/api/v2",
-  "login": "soldier_yuque",
-  "repo": "blog",
-  "token": "w5tGdHesPlV0UjDHUBisMd27xR8uU4Bhd2TV0q1v",
-  "onlyPublished": true,
-  "onlyPublic": true
-},
+    "postPath": "source/_posts/yuque",
+    "cachePath": "yuque.json",
+    "mdNameFormat": "slug",
+    "adapter": "hexo",
+    "concurrency": 5,
+    "baseUrl": "https://www.yuque.com/api/v2",
+    "login": "soldier_yuque",
+    "repo": "blog",
+    "token": "w5tGdHesPlV0UjDHUBisMd27xR8uU4Bhd2TV0q1v",
+    "onlyPublished": true,
+    "onlyPublic": true
+  },
   "dependencies": {
     "hexo": "^5.0.0",
     "hexo-deployer-git": "^2.1.0",
@@ -41,4 +41,3 @@
     "yuque-hexo": "^1.7.0"
   }
 }
-
