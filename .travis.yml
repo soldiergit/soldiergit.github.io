@@ -16,8 +16,8 @@ before_install:
 
 # 安装hexo及插件
 install:
-  - npm install hexo-cli -g
-  - npm install yuque-hexo -g
+  - npm install hexo-cli
+  - npm install yuque-hexo
   - npm install
 
 # 下拉代码后执行的操作

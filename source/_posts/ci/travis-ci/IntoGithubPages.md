@@ -301,6 +301,8 @@ date: 2021-05-12 16:05:00
         
         # 安装hexo及插件
         install:
+          - npm install hexo-cli
+          - npm install yuque-hexo
           - npm install
         
         # 下拉代码后执行的操作
